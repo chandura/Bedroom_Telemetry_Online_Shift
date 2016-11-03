@@ -141,16 +141,10 @@ void six()
 
 void seven()
 {
+  //Display a number 7
   digitalWrite(latchPin, LOW);
   shiftOut(dataPin, clockPin, MSBFIRST, 7);
   digitalWrite(latchPin, HIGH);
-  //digitalWrite( aseg, HIGH);
-  //digitalWrite( bseg, HIGH);
-  //digitalWrite( cseg, HIGH);
-  //digitalWrite( dseg, LOW);
-  //digitalWrite( eseg, LOW);
-  //digitalWrite( fseg, LOW);
-  //digitalWrite( gseg, LOW);
 }
 
 void eight()
@@ -200,45 +194,27 @@ void zero()
 
 void off()
 {
+  //Switch off all segments
   digitalWrite(latchPin, LOW);
   shiftOut(dataPin, clockPin, MSBFIRST, 0);
   digitalWrite(latchPin, HIGH);
-  //digitalWrite( aseg, LOW);
-  //digitalWrite( bseg, LOW);
-  //digitalWrite( cseg, LOW);
-  //digitalWrite( dseg, LOW);
-  //digitalWrite( eseg, LOW);
-  //digitalWrite( fseg, LOW);
-  //digitalWrite( gseg, LOW);
 }
 
 void degs()
 {
+  //Display degress sign
   digitalWrite(latchPin, LOW);
   shiftOut(dataPin, clockPin, MSBFIRST, 99);
   digitalWrite(latchPin, HIGH);
-  //digitalWrite( aseg, HIGH);
-  //digitalWrite( bseg, HIGH);
-  //digitalWrite( cseg, LOW);
-  //digitalWrite( dseg, LOW);
-  //digitalWrite( eseg, LOW);
-  //digitalWrite( fseg, HIGH);
-  //digitalWrite( gseg, HIGH);
+
 }
 
 void cee()
 {
+  //Display a capital C
   digitalWrite(latchPin, LOW);
   shiftOut(dataPin, clockPin, MSBFIRST, 57);
   digitalWrite(latchPin, HIGH);
-  //Display a capital C
-  //digitalWrite( aseg, HIGH);
-  //digitalWrite( bseg, LOW);
-  //digitalWrite( cseg, LOW);
-  //digitalWrite( dseg, HIGH);
-  //digitalWrite( eseg, HIGH);
-  //digitalWrite( fseg, HIGH);
-  //digitalWrite( gseg, LOW);
 }
 
 void eee()

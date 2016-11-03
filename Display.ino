@@ -1,4 +1,5 @@
 void displayTime(String toDisplay) {
+  //Display the time on the 7 Segment LED
   #define DISPLAY_BRIGHTNESS  500
 
   long beginTime = millis();

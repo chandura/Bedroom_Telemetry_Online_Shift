@@ -16,9 +16,23 @@ String getthertcTime () {
     
   DateTime now = rtc.now();
 
+  themonth = int(now.month());
+  theday = int(now.dayOfTheWeek());
+  monthday = int(now.day());
   hours = int(now.hour());
-  minutes=int(now.minute());
+  minutes= int(now.minute());
   seconds = int(now.second());
+
+  setmorningtime();
+
+  if (GMT=="Y") {
+    if (hours==0){
+      hours = 23;
+    }
+    else {
+      hours = hours - 1;  
+    }
+  }
 
   if (hours<10){
     timeString = '0' + String(hours);
@@ -26,61 +40,23 @@ String getthertcTime () {
   else {
     timeString = String(hours);
   }
+  
   if (minutes<10){
     timeString = timeString + '0' + String(minutes);
   }
   else {
     timeString = timeString + String(minutes);
   }
-
   
-  
-  if (verbose == 1){
-    Serial.print ("The timeString is: ");
-    Serial.println (timeString);
-  }
-  
-    if (verbose==1){
-      Serial.print(now.year(), DEC);
-      Serial.print('/');
-      Serial.print(now.month(), DEC);
-      Serial.print('/');
-      Serial.print(now.day(), DEC);
-      Serial.print(" (");
-      Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
-      Serial.print(") ");
-      Serial.print(now.hour(), DEC);
-      Serial.print(':');
-      Serial.print(now.minute(), DEC);
-      Serial.print(':');
-      Serial.print(now.second(), DEC);
-      Serial.println();
-    
-      Serial.print(" since midnight 1/1/1970 = ");
-      Serial.print(now.unixtime());
-      Serial.print("s = ");
-      Serial.print(now.unixtime() / 86400L);
-      Serial.println("d");
-    
-      // calculate a date which is 7 days and 30 seconds into the future
-      DateTime future (now + TimeSpan(7,12,30,6));
-    
-      Serial.print(" now + 7d + 30s: ");
-      Serial.print(future.year(), DEC);
-      Serial.print('/');
-      Serial.print(future.month(), DEC);
-      Serial.print('/');
-      Serial.print(future.day(), DEC);
-      Serial.print(' ');
-      Serial.print(future.hour(), DEC);
-      Serial.print(':');
-      Serial.print(future.minute(), DEC);
-      Serial.print(':');
-      Serial.print(future.second(), DEC);
-      Serial.println();
-    
-      Serial.println();
-      delay(3000);
-    }
-    return timeString;
+  return timeString;
 }
+
+void setmorningtime () {
+  if (theday == 0 || theday == 6) {
+    morningon = 900;
+  }
+  else {
+    morningon = 625;
+  }
+}
+

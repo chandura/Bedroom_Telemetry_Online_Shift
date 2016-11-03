@@ -8,6 +8,7 @@
 #endif
 
 #define PIN 12
+#define GMT "Y"
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -25,17 +26,18 @@ RTC_DS3231 rtc;
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 //Set up for the shift register
-//Pin connected to ST_CP of 74HC595
-int latchPin = 8;
-//Pin connected to SH_CP of 74HC595
-int clockPin = 7;
-////Pin connected to DS of 74HC595
-int dataPin = 6;
+int latchPin = 8;  //Pin connected to ST_CP of 74HC595
+int clockPin = 7;  //Pin connected to SH_CP of 74HC595
+int dataPin = 6; //Pin connected to DS of 74HC595
 
 // Declare the variables that are required to get the time
-
 #define YES 1;
 #define NO 0;
+
+//Declare everthing required to measure the temprature
+const char temp = A6;   //Input for the input from the temp sensor
+int Count;              //Declare the counter to read the temp sensor many times
+#define Count 1000      // The sensor will sample the temp 1000 times for accuracy
 
 boolean Synced = 0;
 
@@ -53,9 +55,13 @@ int hour2counter;
 int min1;
 int min2;
 
+int themonth;
+int theday;
+int monthday;
 int hours;
 int minutes;
 int seconds;
+int morningon;
 
 long interval;
 long previousMillis = 0; // will store last time LED was updated
@@ -75,18 +81,8 @@ const char digit2 = A1; //Digit 2
 const char digit3 = A2; //Digit 3
 const char digit4 = A3; //Digit 4
 
-const char temp = A6;   //Input for the input from the temp sensor
+// const int colon = 11;
 
-//const int aseg = 3;     //Segment A top
-//const int bseg = 4;     //Segment B top right
-//const int cseg = 5;     //Segmnet C bottom right
-//const int dseg = 6;     //Segment D bottom
-//const int eseg = 7;     //Segment E bottom left
-//const int fseg = 8;     //Segment F top left
-//const int gseg = 9;     //Segment G middle
-//const int dp = 10;      //Decimal point
-const int colon = 11;
-int Count;              //Declare the counter to read the temp sensor many times
 float temperature;
 int inttemp;
 String displaytemp;
@@ -94,8 +90,6 @@ String timeString;
 long SensorAverage = 0;
 int sensorVal = 0;
 float voltage = 0;
-
-#define Count 1000
 
 void setup () {
   
@@ -131,7 +125,7 @@ void setup () {
     while(1);
   }
 
-  setVariables();
+  //setVariables();
 
   // Set the relevent pins for to control the LED segments
   for (int pinNumber = 3; pinNumber <13; pinNumber++)
@@ -139,12 +133,6 @@ void setup () {
     pinMode(pinNumber, OUTPUT);
     //digitalWrite(pinNumber, LOW);
   }
-
-  //int numbertoDisplay(1);
-  //digitalWrite(11, LOW);
-  //digitalWrite(latchPin, LOW);
-  //shiftOut(dataPin, clockPin, MSBFIRST, numbertoDisplay);
-  //digitalWrite(latchPin, HIGH);
   
   // Set the relevant pins to control the LED digits
   pinMode(digit1, OUTPUT); //Digit 1
@@ -163,24 +151,20 @@ void setup () {
   #endif
   // End of trinket special code
 
-
   strip.begin();
-  strip.setBrightness(25);
+  strip.setBrightness(6);
   strip.show(); // Initialize all pixels to 'off'
-}
 
-void loop () {
-
-  // Sync time from the externl source as there is no RTC
-  previousMillis = millis();
- 
   //Turn off all the segments of the display
   off();
 
-  for (int hold = 100; hold>0; hold--){
+}
+
+void loop () {
+ 
+  //for (int hold = 100; hold>0; hold--){
     // If it is an odd minute display the temp instead
     if (seconds < 30 || seconds > 45){
-      //timeString = digitalClockDisplay();
       timeString = getthertcTime();
       displayTime(timeString);
     }
@@ -189,39 +173,12 @@ void loop () {
       inttemp = int(temperature);
       displaytemp = String(inttemp);
       displayTemp(displaytemp);
-      currentMillis = millis();
-      if (verbose == 1){
-          Serial.print ("Looking for previous time being less that the current time - 1 minute ");
-          Serial.print ("Previous time : ");
-          Serial.print (previousMillis);
-          Serial.print (" Current time : ");
-          Serial.print (currentMillis);
-          Serial.print (" Current time less 1 minute : ");
-      }
+      //currentMillis = millis();
         
-      currentMillis = currentMillis - (1000.00 * 60.00 * 10.00);
+      //currentMillis = currentMillis - (1000.00 * 60.00 * 10.00);
         
-      if (verbose == 1){
-          Serial.println (currentMillis);
-      }
-        
-      //Decide whether to write out the temp to the database - every 10 mins
-      //This needs reinstating - but using the RTC and not the sync'ed time
-        
-      //if (previousMillis < (millis() - (1000.00 * 60.00 * 10))) {
-          writeTemp();
-          //previousMillis = millis();
-          //if (verbose == 1){
-            //Serial.print ("Previous time reset to ");
-            //Serial.println (previousMillis);
-          //}
-      //}
-      //else {
-        //if (verbose == 1)
-          //Serial.println ("No database write this time");
-        //}
-      //}
+      writeTemp();
     }
-  }
+  //}
 }  
 
