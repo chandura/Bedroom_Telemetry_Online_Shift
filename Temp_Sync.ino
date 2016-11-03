@@ -1,86 +1,56 @@
 float getTemp (){  
   // Get the temprature
-  // Get the voltage measured at the analogue input
-  int i;
-
-  SensorAverage = 0;
+  
+  SensorAverage = 0;  //Using an average mechinisum for accuracy.  Start by settimg the value to 0.  
+  int i;              // Create variable for the counting of the sensor values
 
   for(i=0; i<Count; i++)
   {
-    sensorVal = analogRead(temp);
+    sensorVal = analogRead(temp); // Get the voltage measured at the analogue input
     SensorAverage = SensorAverage + sensorVal;
-
-    if (verbose==1) {
-      Serial.print("The seconds value is set to ");
-      Serial.println (seconds);
-    }
-    timeString = getthertcTime();
-    if (seconds < 30 || seconds > 45){
-        //timeString = digitalClockDisplay();
-        //timeString = getthertcTime();
-        displayTime(timeString);
+    
+    timeString = getthertcTime();        //Get the time from the realtime clock
+    if (seconds < 30 || seconds > 45){   //It is not between 30 and 45 seconds on the clock.  
+        displayTime(timeString);         //Display the time
       }
-     else{
-       inttemp = int(temperature);
-       displaytemp = String(inttemp);
-       displayTemp(displaytemp);
+     else{                               //It is between 30 and 45 seconds on the clock
+       inttemp = int(temperature);       //Get the temperature value ready for display
+       displaytemp = String(inttemp);    //Convert it to a string
+       displayTemp(displaytemp);         //Display the temperature
      }
   }  
   
   //Calculate the temp from the from the reading
-  sensorVal = SensorAverage / Count;
-  voltage = (sensorVal/1024.0) * 5.0;
-  temperature = (voltage - 0.5) * 100;
+  sensorVal = SensorAverage / Count;     //Find the average value that was calculated
+  voltage = (sensorVal/1024.0) * 5.0;    //Calculate the voltage from the average value calculated
+  temperature = (voltage - 0.5) * 100;   //Calculate the tempreture from the voltage calculated
  
- if (verbose == 1){
-    Serial.print ("sensorVal ");
-    Serial.print (sensorVal);
-    Serial.print (" voltage ");
-    Serial.print (voltage);
-    Serial.print (". Temperture to display ");
-    Serial.print (temperature);
-    Serial.println (" degrees C");
-  } 
-  //for(int i=0; i<strip.numPixels()+1; i++){
-    int offset = int(temperature-17);
-    if (verbose == 1){
-      Serial.print ("Off set ");
-      Serial.println(offset);
-      Serial.print ("The hours reads ");
-      Serial.println(hours);
-    }
-    if (hours < 22 && hours > 6) {
-      setColours(strip.Color(0, 0, 255), 0, 8);
-      int midlights = 7 - offset;
-      if (verbose==1){
-        Serial.print ("The value of midlights is ");
-        Serial.println (midlights);
+  int offset = int(temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
+  int timeset = hours * 100;
+  timeset = timeset + minutes;
+
+  //Serial.print("Timset ");
+  //Serial.println(timeset);
+  if (timeset < 2235 && timeset > morningon) {        //Only light up the neo-pixels between the hours of 7:00 am and 11:00pm 
+    setColours(strip.Color(0, 0, 255), 0, 8);   //Set all the lights to blue
+    int midlights = 7 - offset;                 //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
+    
+    if (midlights > 0){                         //If not all the lights are red turn some pink
+      for (int l=offset+midlights; l>offset; l--){
+           int val = 255/(midlights+2);          //Calculate a shade of pink to start with
+           int change = val*(l-offset);          //Adjust it by the light that is been lit (make to bluer nearer the blue light)
+           int r = (255 - change);               //Calculate the red value (making it less red)
+           int b = (0 + change);                 //Calculate the blue value (making it more blue)
+   
+           setColours(strip.Color(r, 0, b), 0, l); //Set the value of the light based on the calculated value
       }
-      if (midlights > 0){
-        for (int l=offset+midlights; l>offset; l--){
-            int val = 255/(midlights+2);
-            int change = val*(l-offset);
-            int r = (255 - change);
-            int b = (0 + change);
-            if (verbose==1){
-              Serial.print("The value of l is ");
-              Serial.println(l);
-              Serial.print("The value of val is ");
-              Serial.print(val);
-              Serial.print(" the value of change is ");
-              Serial.print(change);
-              Serial.print(" the value of r is ");
-              Serial.print(r);
-              Serial.print(" the value of b is ");
-              Serial.println(b);
-            }  
-            setColours(strip.Color(r, 0, b), 0, l); 
-        }
-      }
-      setColours(strip.Color(255, 0, 0), 0, offset); 
     }
-    //delay(1000);
-  //}
-  
+    setColours(strip.Color(255, 0, 0), 0, offset); //If it is between 11:00pm and 7:00 am switch all the neo-pixals off
+  }
+  else 
+  {
+    //Serial.print("Inside the else");
+    setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
+  }
   return (temperature); 
 }
