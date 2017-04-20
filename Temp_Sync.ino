@@ -22,7 +22,7 @@ float getTemp (){
   
   //Calculate the temp from the from the reading
   sensorVal = SensorAverage / Count;     //Find the average value that was calculated
-  voltage = (sensorVal/1024.0) * 5.0;    //Calculate the voltage from the average value calculated
+  voltage = (sensorVal/1024.0) * 4.555;    //Calculate the voltage from the average value calculated
   temperature = (voltage - 0.5) * 100;   //Calculate the tempreture from the voltage calculated
  
   int offset = int(temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)

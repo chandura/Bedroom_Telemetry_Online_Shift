@@ -16,6 +16,7 @@ String getthertcTime () {
     
   DateTime now = rtc.now();
 
+  theyear = int(now.year());
   themonth = int(now.month());
   theday = int(now.dayOfTheWeek());
   monthday = int(now.day());
@@ -23,9 +24,20 @@ String getthertcTime () {
   minutes= int(now.minute());
   seconds = int(now.second());
 
+  clockchange();
   setmorningtime();
 
-  if (GMT=="Y") {
+  if (debug==2){
+    Serial.print("GMT at the time display ");
+    Serial.print(GMT);
+    Serial.print(" and the hours are ");
+    Serial.print(hours);
+  }
+  if (GMT=='Y') {
+    if (debug==3){
+      Serial.println("Inside the adjust");
+    }
+    
     if (hours==0){
       hours = 23;
     }

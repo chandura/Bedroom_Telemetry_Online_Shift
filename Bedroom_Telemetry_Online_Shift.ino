@@ -8,16 +8,9 @@
 #endif
 
 #define PIN 12
-#define GMT "Y"
+char GMT = 'Y';
 
-// Parameter 1 = number of pixels in strip
-// Parameter 2 = Arduino pin number (most are valid)
-// Parameter 3 = pixel type flags, add together as needed:
-//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
-//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
-//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
-//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-//   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
 
 //Define the DS3231 as rtc - the Real Time Clock
@@ -43,9 +36,11 @@ boolean Synced = 0;
 
 boolean AM;
 boolean PM;
+boolean verbose = 0;
 
 // Define whether to print out the time details
-boolean verbose = 0;
+int debug = 0; //A value of 1 swithces on the debugging
+
 
 int counter2;
 int counter3;
@@ -55,6 +50,7 @@ int hour2counter;
 int min1;
 int min2;
 
+int theyear;
 int themonth;
 int theday;
 int monthday;
@@ -62,6 +58,7 @@ int hours;
 int minutes;
 int seconds;
 int morningon;
+int testday;
 
 long interval;
 long previousMillis = 0; // will store last time LED was updated
@@ -92,6 +89,7 @@ int sensorVal = 0;
 float voltage = 0;
 
 void setup () {
+
   
   Serial.begin(9600); //Open the serial port
   Wire.begin(); //Open the interface for the rtc
@@ -99,6 +97,8 @@ void setup () {
   if (verbose == 1){
     Serial.println("Serial communicatons are open");
   }
+  Serial.print("GMT has been initilised as ");
+  Serial.println(GMT);
 
   //Taken from the rtc example
   #ifndef ESP8266
@@ -157,6 +157,9 @@ void setup () {
 
   //Turn off all the segments of the display
   off();
+
+  getthertcTime(); //Set the time from the RTC
+  summertime();    //Test for British Summer Time
 
 }
 
