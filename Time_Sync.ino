@@ -5,37 +5,37 @@
 String digitalClockDisplay(){
   // digital clock display of the time
 
-  if (verbose == 1){
+  if (verbose == 2){
     Serial.print ("The raw values are ");
-    Serial.print (hour());
+    Serial.print (hours);
     Serial.print (":");
-    Serial.print (minute());
+    Serial.print (minutes);
     Serial.print(":");
-    Serial.print(second());
+    Serial.print(seconds);
   }
   
-  if (verbose == 1){
+  if (verbose == 2){
     Serial.print(" ");
-    Serial.print(day());
+    Serial.print(theday);
     Serial.print(" ");
-    Serial.print(month());
+    Serial.print(themonth);
     Serial.print(" ");
-    Serial.print(year()); 
+    Serial.print(theyear); 
     Serial.println();
   } 
     
-  if (hour() < 10){
-    timeString = "0" + String(hour());
+  if (hours < 10){
+    timeString = "0" + String(hours);
   }
   else {
-    timeString = String(hour());
+    timeString = String(hours);
   }
   
-  if (minute() < 10) {
-    timeString = timeString + "0" + String(minute());
+  if (minutes < 10) {
+    timeString = timeString + "0" + String(minutes);
   }
   else {
-    timeString = timeString + String(minute());
+    timeString = timeString + String(minutes);
   }
   
   if (verbose == 1){
@@ -59,11 +59,11 @@ void processSyncMessage() {
           pctime = (10 * pctime) + (c - '0') ; // convert digits to a number    
         }
       }   
-      setTime(pctime);   // Sync Arduino clock to the time received on the serial port
+      //setTime(pctime);   // Sync Arduino clock to the time received on the serial port
     }  
   }
   
-  if(timeStatus() == timeSet){
-    Synced = 1;
-  }  
+  //if(timeStatus() == timeSet){
+    //Synced = 1;
+  //}  
 }
