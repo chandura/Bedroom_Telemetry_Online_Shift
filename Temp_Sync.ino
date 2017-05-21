@@ -24,6 +24,15 @@ float getTemp (){
   sensorVal = SensorAverage / Count;     //Find the average value that was calculated
   voltage = (sensorVal/1024.0) * 4.555;    //Calculate the voltage from the average value calculated
   temperature = (voltage - 0.5) * 100;   //Calculate the tempreture from the voltage calculated
+  
+  //Check to see if the temp has drifted from a reasonable range
+  //If the temp has risen above 26 degrees - reset the Arduino
+
+  if (temperature > 26) {
+    resetFunc();  //Call the reset function as the temprature has risen too high
+  }
+
+  //Put the reset code in here ^^^
  
   int offset = int(temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
   int timeset = hours * 100;
