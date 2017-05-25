@@ -31,6 +31,9 @@ int dataPin = 6; //Pin connected to DS of 74HC595
 const char temp = A6;   //Input for the input from the temp sensor
 int Count;              //Declare the counter to read the temp sensor many times
 #define Count 1000      // The sensor will sample the temp 1000 times for accuracy
+// Set up a counter to delay the reset of the Arduino if it is over temprature
+int delayCount = 0;
+
 
 boolean Synced = 0;
 
@@ -106,6 +109,7 @@ void setup () {
       while (!Serial); // for Leonardo/Micro/Zero
   #endif
 
+  // Need to make a change to set the LED to Help if the RTC can't be found
   if (! rtc.begin()) {
     if (verbose==1) {
         Serial.println("Couldn't find RTC");  

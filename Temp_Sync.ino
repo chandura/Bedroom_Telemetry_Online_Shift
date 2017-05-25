@@ -29,9 +29,18 @@ float getTemp (){
   //If the temp has risen above 26 degrees - reset the Arduino
 
   if (temperature > 26) {
-    resetFunc();  //Call the reset function as the temprature has risen too high
+    if (delayCount == 8) {
+      resetFunc();  //Call the reset function as the temprature has risen too high  
+    }
+    setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
+    setColours(strip.Color(0, 255, 0), 0, delayCount); //Show that the delay counter is running
+    delayCount++;
   }
-
+  else if (delayCount > 0)
+  {
+    delayCount = 0;  
+  }
+  
   //Put the reset code in here ^^^
  
   int offset = int(temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
