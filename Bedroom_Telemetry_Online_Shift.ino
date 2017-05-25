@@ -37,6 +37,7 @@ boolean Synced = 0;
 boolean AM;
 boolean PM;
 boolean verbose = 0;
+boolean setTime = 0;  //Switch this on (1) if you want to reset the time on the RTC at restart.
 
 // Define whether to print out the time details
 int debug = 0; //A value of 1 swithces on the debugging
@@ -125,6 +126,14 @@ void setup () {
     while(1);
   }
 
+  //Reset the time on the RTC if required
+  if (setTime==1) {
+    // This sets the RTC to the date & time this sketch was compiled
+    rtc.adjust(DateTime(__DATE__, __TIME__));
+    // Now switch off the reset so it isn't set again
+    setTime=0;
+  }
+
   //setVariables();
 
   // Set the relevent pins for to control the LED segments
@@ -162,6 +171,8 @@ void setup () {
   summertime();    //Test for British Summer Time
 
 }
+
+void (* resetFunc) (void) = 0; //Declare the reset function at address 0
 
 void loop () {
  
