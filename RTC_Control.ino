@@ -1,4 +1,4 @@
-String getthertcTime () {
+String getthertcTime2 () {
   if (verbose==1){
       Serial.print("Getting the time now");
   }
@@ -52,7 +52,7 @@ String getthertcTime () {
   return timeString;
 }
 
-void setmorningtime () {
+void setmorningtime2 () {
   if (theday == 0 || theday == 6) {
     morningon = 900;
   }
