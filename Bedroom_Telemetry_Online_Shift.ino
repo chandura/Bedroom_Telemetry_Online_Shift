@@ -1,6 +1,6 @@
 // Include the libraries that are required for the temp and humidity sensor
-#include <DHT_U.h>
 #include <DHT.h>
+
 
 // Date and time functions using a DS3231 RTC connected via I2C and Wire lib
 #include <Wire.h>
@@ -91,7 +91,8 @@ int green_adjust = 0;        // The variable used to control the intensity of th
 int over_run_temp = 26;      // Set the value at which the temprature goes out of the upper range  
 
 //Declare everthing required to measure the temprature
-// #define DHT11_PIN 7       // This is the pin that is used to meausre the readings through the DHT11 sensor.  Check that D7 isn't already in use.
+#define DHTPIN 5             // This is the pin that is used to meausre the readings through the DHT11 sensor.
+#define DHTTYPE DHT11        // DHT 11
 const char temp = A6;        // Input for the input from the temp sensor
 int Count;                   // Declare the counter to read the temp sensor many times
 #define Count 1000           // The sensor will sample the temp 1000 times for accuracy
@@ -105,6 +106,9 @@ float voltage = 0;           // Hold the value of the voltage calculated from th
 
 // Initilize thw Neo pixel strip
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
+
+// Initialize DHT sensor.
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup () {
   
@@ -173,16 +177,23 @@ void setup () {
 void loop () {
  
   // Display the temprature when the time is between 30 and 43 seconds past the minute, otherwise show the time
-  if (seconds < 30 || seconds > 45){
-    timeString = getthertcTime();    // Get the latest time from the rtc, write it to the time sring for display 
-    displayTime(timeString);         // Dsplay the time obtained from the rtc
+  if (lights_on == 'N') {              
+    // We are in the lights off mode.  There is no need to check or display the temprature during this time 
+    timeString = getthertcTime();      // Get the latest time from the rtc, write it to the time sring for display 
+    displayTime(timeString);           // Dsplay the time obtained from the rtc
   }
   else {
-    temperature = getTemp();         // Get the current temprature from from the sensor
-    inttemp = int(temperature);      // Convert it to an integer ready for display on the 7 segment LED
-    displaytemp = String(inttemp);   // Move the ingerer value into a string to be displayed on the 7 segment LED
-    displayTemp(displaytemp);        // Call the routine to display the temprature on the 7 segment LED   
-    writeTemp();                     // Write the temprature out to the serial monitor 
+    if (seconds < 30 || seconds > 45){ 
+      // We are in the lights on mode.  The temprature should be checked and displayed during this time 
+      timeString = getthertcTime();    // Get the latest time from the rtc, write it to the time sring for display 
+      displayTime(timeString);         // Dsplay the time obtained from the rtc
+    }
+    else {
+      temperature = getTemp();         // Get the current temprature from from the sensor
+      inttemp = int(temperature);      // Convert it to an integer ready for display on the 7 segment LED
+      displaytemp = String(inttemp);   // Move the ingerer value into a string to be displayed on the 7 segment LED
+      displayTemp(displaytemp);        // Call the routine to display the temprature on the 7 segment LED   
+      writeTemp();                     // Write the temprature out to the serial monitor 
+    }
   }
 }  
-
