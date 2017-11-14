@@ -61,5 +61,19 @@ void clockchange () {
   }
 }
 
+void night_and_day ()
+{
+  // Routine to set the day/night value (lights_on) used to switch on/off the neo-pixels and temp dislpay durimg day/night time
+  int timeset = hours * 100;
+  timeset = timeset + minutes;
+  if (timeset < 2235 && timeset > morningon) {                 
+    lights_on = 'Y';                                  //Ensure that the on/off swicth is set to on if the time is between the morningon time and the nightoff time
+  }
+  else 
+  {
+    lights_on = 'N';                                  //Ensure that the on/off swicth is set to off if the time is between the nightoff time and the morningon time
+  } 
+}
+
 
 

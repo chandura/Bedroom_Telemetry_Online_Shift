@@ -175,8 +175,11 @@ void setup () {
 //void (* resetFunc) (void) = 0; //Declare the reset function at address 0
 
 void loop () {
- 
+
+  night_and_day();                    // Check whether the clock should be in night or day mode 
+  
   // Display the temprature when the time is between 30 and 43 seconds past the minute, otherwise show the time
+  
   if (lights_on == 'N') {              
     // We are in the lights off mode.  There is no need to check or display the temprature during this time 
     timeString = getthertcTime();      // Get the latest time from the rtc, write it to the time sring for display 
