@@ -20,7 +20,8 @@ boolean setTime = 0;  //Switch this on (1) if you want to reset the time on the 
 int debug = 0;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
-                      //A value od 3 switched on the Temp overrun debugging
+                      //A value of 3 switches on the Temp overrun debugging
+                      //A vakue of 4 switches on the day and night debugging 
 
 // Set up the initial variables associated with the time functions
 char GMT = 'Y';              // Start the programme assuming that the time on the RTC is set to GMT
