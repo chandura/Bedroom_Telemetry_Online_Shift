@@ -34,6 +34,7 @@ int hours;                   // The value of the hours in the current time
 int minutes;                 // The value of the minutes in the current time
 int seconds;                 // The value of the seconds in the current time
 int morningon;               // Holds the time in the morning that the lights should be turned on.
+int nightoff = 2235;         // Holds the time im the evening that the lights should be turned off.
 int testday;                 // Hold details of the day value to test.  Used to help determine of Daylight Saving should be applied
 String timeString;           // Holds the time as a string for display on the 7 segment display
 
