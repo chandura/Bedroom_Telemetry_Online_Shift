@@ -108,35 +108,40 @@ float getTemp (){
   //Put the reset code in here ^^^
  
   int offset = int(temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
-  int timeset = hours * 100;
-  timeset = timeset + minutes;
+  
+  //int timeset = hours * 100;
+  //timeset = timeset + minutes;
 
   //Serial.print("Timset ");
   //Serial.println(timeset);
-  if (timeset < 2235 && timeset > morningon) {        //Only light up the neo-pixels between the hours of 7:00 am and 11:00pm 
+
+  //night_and_day();                                   // Check whether the clock should be in night or day mode 
+  
+  //if (timeset < 2235 && timeset > morningon) {     //Only light up the neo-pixels between the hours of 7:00 am and 11:00pm 
+  if (lights_on == 'Y') {
     if (delayCount < 1) {
-      setColours(strip.Color(0, 0, 255), 0, 8);   //Set all the lights to blue
-      int midlights = 7 - offset;                  //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
+      setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
+      int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
     
-      if (midlights > 0){                         //If not all the lights are red turn some pink
+      if (midlights > 0){                            //If not all the lights are red turn some pink
         for (int l=offset+midlights; l>offset; l--){
-             int val = 255/(midlights+2);          //Calculate a shade of pink to start with
-             int change = val*(l-offset);          //Adjust it by the light that is been lit (make to bluer nearer the blue light)
-             int r = (255 - change);               //Calculate the red value (making it less red)
-             int b = (0 + change);                 //Calculate the blue value (making it more blue)
+             int val = 255/(midlights+2);            //Calculate a shade of pink to start with
+             int change = val*(l-offset);            //Adjust it by the light that is been lit (make to bluer nearer the blue light)
+             int r = (255 - change);                 //Calculate the red value (making it less red)
+             int b = (0 + change);                   //Calculate the blue value (making it more blue)
    
-             setColours(strip.Color(r, 0, b), 0, l); //Set the value of the light based on the calculated valueoff
+             setColours(strip.Color(r, 0, b), 0, l); //Set the value of the light based on the calculated value off r and b green is asways off
         }
       }
-      setColours(strip.Color(255, 0, 0), 0, offset); //If it is between 11:00pm and 7:00 am switch all the neo-pixals        
-      lights_on = 'Y';
+      setColours(strip.Color(255, 0, 0), 0, offset); //Set the remaining lights to red        
+      //lights_on = 'Y';
     }
   }
   else 
   {
     //Serial.print("Inside the else");
     setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
-    lights_on = 'N';
+    //lights_on = 'N';
   }
   return (temperature); 
 }

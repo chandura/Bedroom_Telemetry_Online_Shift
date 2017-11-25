@@ -74,7 +74,7 @@ void night_and_day ()
   
   int timeset = hours * 100;
   timeset = timeset + minutes;
-  if (timeset < 2235 && timeset > morningon) {                 
+  if (timeset < nightoff && timeset > morningon) {                 
     lights_on = 'Y';                                  // Ensure that the on/off swicth is set to on if the time is between the morningon time and the nightoff time
   }
   else 
