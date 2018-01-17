@@ -34,7 +34,7 @@ String getthertcTime () {
     Serial.print(hours);
   }
   if (GMT=='Y') {
-    if (debug==3){
+    if (debug==4){
       Serial.println("Inside the adjust");
     }
     
