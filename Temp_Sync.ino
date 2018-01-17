@@ -36,7 +36,20 @@ float getTemp (){
 
     //debug_temp_overrun_led_values ();
     if (debug==3){
-      Serial.print ("TEMP OVERRUN SETTING Debugging - Display the values used to set the LEDs - ");
+      Serial.println ("TEMP OVERRUN SETTING Debugging");
+      Serial.print ("Record Time - ");
+      Serial.print (monthday);
+      Serial.print ("/");
+      Serial.print (themonth);
+      Serial.print ("/");
+      Serial.print (theyear);
+      Serial.print (" - ");
+      Serial.print (hours);
+      Serial.print (":");
+      Serial.print (minutes);
+      Serial.print (":");
+      Serial.println (seconds);
+      Serial.print ("Display the values used to set the LEDs - ");
       Serial.print ("Setting green ");
       Serial.print (delayCount);
       Serial.print (" adjust ");
@@ -65,6 +78,17 @@ float getTemp (){
        // The lenght of time that the tempreture has been out of range is short.  Switch all of the lights off.
        setColours(strip.Color(0, 0, 0), 0, 8);                                 //Set all the lights to off
     }
+
+    if (debug==3) {
+      Serial.print ("Red : ");
+      Serial.print (red);
+      Serial.print (" Green : ");
+      Serial.print (green);
+      Serial.print (" Blue : ");
+      Serial.print (blue);
+      Serial.print (" Delay Offest (LED to light) : ");
+      Serial.println (delayOffset - 1);
+    }
     
     if (lights_on == 'Y') {                                                    // Are the lights suppose to be on?
       setColours(strip.Color(red, green, blue), 0, delayOffset);               // delayOffset indicates the highest light that should be lit.  Set it based on the calcualted RGB intensity
@@ -83,11 +107,51 @@ float getTemp (){
   }
   else if (delayCount > 0)
   {
+    int delayAdjust = delayOffset - 1;           // ??
+    int green_adjust = 765 * delayAdjust;        // ??
     // delayCount = 0;
+
+    //debug_temp_overrun_led_values ();
+    if (debug==3){
+      Serial.println ("TEMP OVERRUN SETTING (INSIDE RANGE) Debugging");
+      Serial.print ("Record Time - ");
+      Serial.print (monthday);
+      Serial.print ("/");
+      Serial.print (themonth);
+      Serial.print ("/");
+      Serial.print (theyear);
+      Serial.print (" - ");
+      Serial.print (hours);
+      Serial.print (":");
+      Serial.print (minutes);
+      Serial.print (":");
+      Serial.println (seconds);
+      Serial.print ("Display the values used to set the LEDs - ");
+      Serial.print ("Setting green (delayCount ");
+      Serial.print (delayCount);
+      Serial.print (" adjust (delayAdjust) ");
+      Serial.print(delayAdjust);
+      Serial.print(" green adjust (green_Adjust) ");
+      Serial.print (green_adjust);
+      Serial.print(" Adjusted (delayCount - green_adjust) ");
+      Serial.print(delayCount - green_adjust);
+      Serial.print(" Offset ");
+      Serial.println(delayOffset);
+      
+      Serial.print ("Red : ");
+      Serial.print (red);
+      Serial.print (" Green : ");
+      Serial.print (green);
+      Serial.print (" Blue : ");
+      Serial.print (blue);
+      Serial.print (" Delay Offest (LED to light) : ");
+      Serial.println (delayOffset - 1);
+    }
+    
     if (lights_on == 'Y') {                                           // Are the lights suppose to be on?
       setColours(strip.Color(red, green, blue), 0, delayOffset);      // delayOffset indicates the highest light that should be lit.  Set it based on the calcualted RGB intensity
-      //setColours(strip.Color(255, 255, 255), 0, delayOffset -1);    // Switch all the lights bellow that to white
-      setColours(strip.Color(0, 0, 0), 0, delayOffset -1);            // Switch all the lights bellow that to off. This is to reduce the brighness of the out of range lights
+      //setColours(strip.Color(255, 255, 255), 0, delayOffset -1);    // Switch all the lights below that to white
+      setColours(strip.Color(0, 0, 0), 0, delayOffset -1);            // Switch all the lights below that to off. This is to reduce the brighness of the out of range lights
     }  
     
     delayCount = delayCount - 15.0;
@@ -102,6 +166,10 @@ float getTemp (){
     }
     if (delayCount - green_adjust > 510) {                                     // Green and red are at full intensity.  Start lighting the blue.
       blue = delayCount - green_adjust - 510;
+    }
+
+    if (delayCount - green_adjust == 0 && delayOffset > 1){  
+      delayOffset--;                                                           // All LEDs are set to their full intensity.  Move the delayCount up by one to lights the next row.
     }
   }
   
@@ -120,6 +188,10 @@ float getTemp (){
   //if (timeset < 2235 && timeset > morningon) {     //Only light up the neo-pixels between the hours of 7:00 am and 11:00pm 
   if (lights_on == 'Y') {
     if (delayCount < 1) {
+      if (debug==3){
+        Serial.print ("Inside the standard light setting routine.  delayCount = ");
+        Serial.println (delayCount);
+      }
       setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
       int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
     

@@ -17,11 +17,16 @@
 // Switches to switch on various special modes
 boolean verbose = 0;  //Switch this on (1) if you want to debugging prompts to be output
 boolean setTime = 0;  //Switch this on (1) if you want to reset the time on the RTC at restart.
-int debug = 0;        //A value of 0 swithces off all debugging
+int debug = 3;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
                       //A value of 3 switches on the Temp overrun debugging
                       //A vakue of 4 switches on the day and night debugging 
+
+int Brightness = 500;
+//#define DISPLAY_BRIGHTNESS  500  // Define the brightness of the 7 Seg LEDs. The higher the number the brighter the lights 2000 - 0
+//int DISPLAY_BRIGHTNESS = 500;  // Define the brightness of the 7 Seg LEDs. The higher the number the brighter the lights 2000 - 0
+
 
 // Set up the initial variables associated with the time functions
 char GMT = 'Y';              // Start the programme assuming that the time on the RTC is set to GMT
@@ -186,6 +191,9 @@ void loop () {
     // We are in the lights off mode.  There is no need to check or display the temprature during this time 
     timeString = getthertcTime();      // Get the latest time from the rtc, write it to the time sring for display 
     displayTime(timeString);           // Dsplay the time obtained from the rtc
+    if (debug==3) {
+      temperature = getTemp();           // Get the current temprature from from the sensor  
+    }
   }
   else {
     if (seconds < 30 || seconds > 45){ 

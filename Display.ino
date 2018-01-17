@@ -8,7 +8,7 @@ void displayTime(String toDisplay) {
   //Display the time on the 7 Segment LED
   //Passed in parameter is the time determed in RTC_Control 
   
-  #define DISPLAY_BRIGHTNESS  500                                // Define the brightness of the LEDs.  Consider moving out of here for global brightness control.  
+  //#define DISPLAY_BRIGHTNESS  500                                // Define the brightness of the LEDs.  Consider moving out of here for global brightness control.  
 
   long beginTime = millis();                                     // Set 'beginTime' based on the number of miliseconds that the Arduino has been running
 
@@ -40,7 +40,8 @@ void displayTime(String toDisplay) {
       break;
     }
     
-    delayMicroseconds(DISPLAY_BRIGHTNESS);                       // Display this digit for a fraction of a second (between 1us and 5000us, 500 is pretty good)
+    //delayMicroseconds(DISPLAY_BRIGHTNESS);                       // Display this digit for a fraction of a second (between 1us and 5000us, 500 is pretty good)
+    delayMicroseconds(Brightness);                         // Display this digit for a fraction of a second (between 1us and 5000us, 500 is pretty good)
 
     off();                                                       // Switch off all of the segments on the LED
 
@@ -59,7 +60,7 @@ void displayTemp(String toDisplay) {
   //Display the temp on the 7 Segment LED
   //Passed in parameter is the time determed in Temp_Sync 
 
-  #define DISPLAY_BRIGHTNESS  500                                // Define the brightness of the LEDs.  Consider moving out of here for global brightness control.
+  //#define DISPLAY_BRIGHTNESS  500                                // Define the brightness of the LEDs.  Consider moving out of here for global brightness control.
 
   long beginTime = millis();                                     // Set 'beginTime' based on the number of miliseconds that the Arduino has been running 
 
@@ -91,7 +92,7 @@ void displayTemp(String toDisplay) {
       break;
     }
     
-    delayMicroseconds(DISPLAY_BRIGHTNESS);                       // Display this digit for a fraction of a second (between 1us and 5000us, 500 is pretty good)
+    delayMicroseconds(Brightness);                       // Display this digit for a fraction of a second (between 1us and 5000us, 500 is pretty good)
 
     off();                                                       // Switch off all of the segments on the LED
 
