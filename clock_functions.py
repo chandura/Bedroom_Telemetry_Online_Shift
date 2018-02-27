@@ -44,5 +44,5 @@ def post_value(key, value, streamer, post_count, theranges):
         streamer.log("Input Count", post_count)
         streamer.log("Temperature_Now", value)
         if theranges.post_min == "Y":
-            streamer.log("Min_Temp", theranges.temp_min)
+            streamer.log("MinTemp", theranges.temp_min)
             theranges.post_min = "N"
