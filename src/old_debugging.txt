@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+//The code in this tab moves all of the debugging text away from the main code//
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+##This is where debug_help was
+
+void debug_temp_overrun_led_values (){
+    // Show the debugging message associated with temprature measurment 
+   
+    if (debug == 3) {
+      //Serial.print ("TEMP OVERRUN SETTING Debugging - Display the values used to set the LEDs - ");
+      //Serial.print ("Setting green ");
+      //Serial.print (delayCount);
+      //Serial.print (" adjust ");
+      //Serial.print(delayAdjust);
+      //Serial.print(" green adjust ");
+      //Serial.print (green_adjust);
+      //Serial.print(" Adjusted ");
+      //Serial.print(delayCount - green_adjust);
+      //Serial.print(" Offset ");
+      //Serial.println(delayOffset);
+    }
+}

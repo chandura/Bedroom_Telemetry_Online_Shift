@@ -6,9 +6,9 @@ from ISStreamer.Streamer import Streamer
 import serial
 import requests
 import json
-import ConfigParser
+import configparser
 
-configParser = ConfigParser.RawConfigParser()
+configParser = configparser.RawConfigParser()
 configFilePath = r'./tempstream.ini'
 configParser.read(configFilePath)
 
@@ -30,48 +30,50 @@ streamer = Streamer(bucket_name="Stream Example", bucket_key=bucketKey, access_k
  
 streamer.log("My Messages", "Waiting for temp")
 print("Started");
-ser = serial.Serial('/dev/ttyUSB0', 9600)
+#ser = serial.Serial('/dev/ttyUSB0', 9600)
+ser = serial.Serial('COM5', 9600, timeout=0)
 
 print("Testing the input")
 while True:	
-	#streamer.log("My Messages", "Value Aquired")
-        if (inputcount % 100) == 0:
-              print("Write to Dashboard %s" % (inputcount/100))
-	      streamer.log("Input Count", (inputcount/100))
-              write_next = 'Y'
-	print("Got a reading.  Input count %d" % inputcount)
-	#output_yn = 'Y'
+#streamer.log("My Messages", "Value Aquired")
+    if (inputcount % 100) == 0:
+        print("Write to Dashboard %s" % (inputcount/100))
+        streamer.log("Input Count", (inputcount/100))
+        write_next = 'Y'
+    print("Got a reading.  Input count %d" % inputcount)
+    #output_yn = 'Y'
 	
 	#print("Read value")
-	sensor_output = ser.readline().strip()
-	print("Read value %s " % sensor_output)
+    #sensor_output = ser.readline().strip()
+    sensor_output = "{\"Temp\":\"26.11\"}"
+    print("Read value %s " % sensor_output)
 	
-	#Discard the first reading from the serial input is it seems to be badly formed	
+    #Discard the first reading from the serial input is it seems to be badly formed
 	#print("Test for the first reading")
-	if inputcount > 0:
-		#print("First reading to write")
-                print("Sensor Output %s " % sensor_output)
-                data = sensor_output[0]
-                print ("Data tested, found %s write_next is %s " % (data, write_next))
-                if data == "{" and write_next == "Y":
-		      data = json.loads(sensor_output)
-                      print("JSON Found")
-                      value_to_post = 'Y'
-                      write_next = 'N'
-                else:
-                      print("No JSON found")     
-                      value_to_post = 'N'
+    if inputcount > 0:
+        #print("First reading to write")
+        print("Sensor Output %s " % sensor_output)
+        data = sensor_output[0]
+        print ("Data tested, found %s write_next is %s " % (data, write_next))
+        if data == "{" and write_next == "Y":
+            data = json.loads(sensor_output)
+            print("JSON Found")
+            value_to_post = 'Y'
+            write_next = 'N'
+        else:
+            print("No JSON found")
+            value_to_post = 'N'
 	
-                if value_to_post == "Y":
-		    for key, value in data.iteritems():
-			    #if key=="Voltage":
-				    #streamer.log("Voltage", value)
-				
-			    if key=="Temperature":
-				    streamer.log("Temperature_Now", value)
-                                    print ("Written %s as Temperature_Now" % value)
+        if value_to_post == "Y":
+            for key, value in data.items():
+                #if key=="Voltage":
+				#streamer.log("Voltage", value)
 
-			    #print("Value %s" % value)
+                if key=="Temperature":
+                    streamer.log("Temperature_Now", value)
+                    print ("Written %s as Temperature_Now" % value)
+
+                #print("Value %s" % value)
 			    #print("Light Value %s" % light_value)
 
 			    #if key=="Light":
@@ -103,8 +105,8 @@ while True:
 
 		    #streamer.log("My Messages", "Value Posted")
 
-	inputcount = inputcount + 1
-        streamer.close()
+    inputcount = inputcount + 1
+    streamer.close()
 
 #streamer.log("My Messages", "Stream Done")
 print("Done")
