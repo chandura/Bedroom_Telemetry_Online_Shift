@@ -23,23 +23,23 @@ class TestBetween(unittest.TestCase):
         self.assertEqual(config.bucketname, 'Stream Test')
 
     def test_record_write_1(self):
-        write = write_record(1, streamer)
+        write = write_record(1, 100, streamer)
         self.assertEqual(write, 'N')
 
     def test_record_write_100(self):
-        write = write_record(100, streamer)
+        write = write_record(100, 100, streamer)
         self.assertEqual(write, 'Y')
 
     def test_record_write_500(self):
-        write = write_record(500, streamer)
+        write = write_record(500, 100, streamer)
         self.assertEqual(write, 'Y')
 
     def test_no_record_write_50(self):
-        write = write_record(50, streamer)
+        write = write_record(50, 100, streamer)
         self.assertEqual(write, 'N')
 
     def test_no_record_write_701(self):
-        write = write_record(701, streamer)
+        write = write_record(701, 100, streamer)
         self.assertEqual(write, 'N')
 
     def test_got_data_and_json(self):
@@ -66,18 +66,27 @@ class TestBetween(unittest.TestCase):
         theranges.temp_max = 20.00
         theranges.time_now = '00:01'
         theranges.reset
+
         self.assertEqual(theranges.temp_min, 20.00)
         self.assertEqual(theranges.temp_max, 20.00)
 
-    #def test_lower_min(self):
-        #max_min.min_temp = 25.00
-        #max_min.min_temp = reset_max_min("00:01", max_min, 20.00)
-        #self.assertEqual(max_min.min_temp, 20.00)
+    def test_lower_min(self):
+        theranges.temp_min = 25.00
+        theranges.temp_now = 20.00
+        theranges.post_min = 'N'
+        theranges.set_min
 
-    #def test_leave_min(self):
-        #max_min.min_temp = 15.00
-        #min_temp = reset_max_min("11:23", max_min, 17.00)
-        #self.assertEqual(min_temp, 15.00)
+        self.assertEqual(theranges.temp_min, 20.00)
+        self.assertEqual(theranges.post_min, "Y")
+
+    def test_leave_min(self):
+        theranges.temp_min = 15.00
+        theranges.temp_now = 20.00
+        theranges.post_min = 'N'
+        theranges.set_min
+
+        self.assertEqual(theranges.temp_min, 15.00)
+        self.assertEqual(theranges.post_min, "N")
 
 if __name__ == '__main__':
     unittest.main()

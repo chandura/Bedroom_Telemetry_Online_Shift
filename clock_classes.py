@@ -31,7 +31,8 @@ class ranges:
     def __init__(self, temp_now, time_now):
         self.temp_now = temp_now
         self.time_now = time_now
-        self.temp_min = 0.00
+        self.temp_min = 50.00
+        self.post_min = 'N'
         self.temp_max = 0.00
 
     @property
@@ -42,3 +43,9 @@ class ranges:
         else:
             self.temp_min = self.temp_min
             self.temp_max = self.temp_max
+
+    @property
+    def set_min(self):
+        if float(self.temp_now) < float(self.temp_min):
+            self.temp_min = self.temp_now
+            self.post_min = 'Y'
