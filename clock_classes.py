@@ -34,6 +34,7 @@ class ranges:
         self.temp_min = 50.00
         self.post_min = 'N'
         self.temp_max = 0.00
+        self.post_max = 'N'
 
     @property
     def reset(self):
@@ -49,3 +50,9 @@ class ranges:
         if float(self.temp_now) < float(self.temp_min):
             self.temp_min = self.temp_now
             self.post_min = 'Y'
+
+    @property
+    def set_max(self):
+        if float(self.temp_now) > float(self.temp_max):
+            self.temp_max = self.temp_now
+            self.post_max = 'Y'
