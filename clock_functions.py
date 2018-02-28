@@ -41,8 +41,12 @@ def post_value(key, value, streamer, post_count, theranges):
     if key == "Temperature":
         theranges.temp_now = value
         theranges.set_min
+        theranges.set_max
         streamer.log("Input Count", post_count)
         streamer.log("Temperature_Now", value)
         if theranges.post_min == "Y":
             streamer.log("MinTemp", theranges.temp_min)
             theranges.post_min = "N"
+        if theranges.post_max == "Y":
+            streamer.log("MaxTemp", theranges.temp_max)
+            theranges.post_max = "N"

@@ -88,5 +88,23 @@ class TestBetween(unittest.TestCase):
         self.assertEqual(theranges.temp_min, 15.00)
         self.assertEqual(theranges.post_min, "N")
 
+    def test_raise_max(self):
+        theranges.temp_max = 20.00
+        theranges.temp_now = 25.00
+        theranges.post_max = 'N'
+        theranges.set_max
+
+        self.assertEqual(theranges.temp_max, 25.00)
+        self.assertEqual(theranges.post_max, 'Y')
+
+    def test_leave_max(self):
+        theranges.temp_max = 25.00
+        theranges.temp_now = 20.00
+        theranges.post_max = 'N'
+        theranges.set_max
+
+        self.assertEqual(theranges.temp_max, 25.00)
+        self.assertEqual(theranges.post_max, 'N')
+
 if __name__ == '__main__':
     unittest.main()
