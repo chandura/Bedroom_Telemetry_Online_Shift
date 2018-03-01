@@ -33,11 +33,11 @@ def post_record(data, write_next, sensor_output):
 
 def post_value(key, value, streamer, post_count, theranges):
 
-    #print("Post Count %s" % post_count)
-    theranges.time_now = datetime.now().strftime('%H:%M')
-    #print("The time now is %s" % theranges.time_now)
+    theranges.comp_date= datetime.now().strftime('%d')
+    print("Ref date %s" % theranges.ref_date)
+    print("The days is %s" % theranges.comp_date)
     theranges.reset
-    #post_count = post_count + 1
+
     if key == "Temperature":
         theranges.temp_now = value
         theranges.set_min

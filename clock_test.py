@@ -55,20 +55,24 @@ class TestBetween(unittest.TestCase):
     def test_reset_ranges(self):
         theranges.temp_min = 20.00
         theranges.temp_max = 20.00
-        theranges.time_now = '00:00'
+        theranges.ref_date = 15
+        theranges.comp_date = 16
         theranges.reset
 
         self.assertEqual(theranges.temp_min, 50.00)
         self.assertEqual(theranges.temp_max, 0.00)
+        self.assertEqual(theranges.ref_date, 16)
 
     def test_not_reset_ranges(self):
         theranges.temp_min = 20.00
         theranges.temp_max = 20.00
-        theranges.time_now = '00:01'
+        theranges.ref_date = 16
+        theranges.comp_date = 16
         theranges.reset
 
         self.assertEqual(theranges.temp_min, 20.00)
         self.assertEqual(theranges.temp_max, 20.00)
+        self.assertEqual(theranges.ref_date, 16)
 
     def test_lower_min(self):
         theranges.temp_min = 25.00
