@@ -31,6 +31,8 @@ class ranges:
     def __init__(self, temp_now, time_now):
         self.temp_now = temp_now
         self.time_now = time_now
+        self.ref_date = 0
+        self.comp_date = 0
         self.temp_min = 50.00
         self.post_min = 'N'
         self.temp_max = 0.00
@@ -38,9 +40,10 @@ class ranges:
 
     @property
     def reset(self):
-        if self.time_now == '00:00':
+        if self.comp_date != self.ref_date:
             self.temp_min = 50.00
             self.temp_max = 0.00
+            self.ref_date = self.comp_date
         else:
             self.temp_min = self.temp_min
             self.temp_max = self.temp_max
