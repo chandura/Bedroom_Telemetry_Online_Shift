@@ -35,6 +35,7 @@ int Brightness = 500;
 // Set up the initial variables associated with the time functions
 char GMT = 'Y';              // Start the programme assuming that the time on the RTC is set to GMT
                              // This assumes that the PC being used to set the time is running BST
+char temp_read = 'N';        // Start with this value set to N so the temp will be read next time
 int theyear;                 // The value of the year in the current time
 int themonth;                // The value of the month in the current time
 int theday;                  // The value of the day in the current time
@@ -91,7 +92,7 @@ float voltage = 0;           // Hold the value of the voltage calculated from th
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
 
 // Initialize DHT sensor on PIN 5
-#define DHT11_PIN 5
+#define DHT11_PIN 9
 
 void setup() {
     // put your setup code here, to run once:
@@ -169,13 +170,21 @@ void loop() {
       // We are in the lights on mode.  The temprature should be checked and displayed during this time 
       timeString = getthertcTime();    // Get the latest time from the rtc, write it to the time sring for display 
       displayTime(timeString);         // Dsplay the time obtained from the rtc
+      temp_read = 'N';                  // Make sure that the temp wi;; be read next time it needs to be
     }
     else {
-      temperature = getTemp();         // Get the current temprature from from the sensor
-      inttemp = int(temperature);      // Convert it to an integer ready for display on the 7 segment LED
-      displaytemp = String(inttemp);   // Move the ingerer value into a string to be displayed on the 7 segment LED
-      displayTemp(displaytemp);        // Call the routine to display the temprature on the 7 segment LED   
-      writeTemp();                     // Write the temprature out to the serial monitor 
+      //temperature = getTemp();         // Get the current temprature from from the sensor
+      if (temp_read == 'N'){             // Read the temprature once for this cycle
+        Serial.println("Go get the temp now");
+        temperature = measure_DHT_values();
+        writeTemp();                     // Write the temprature out to the serial monitor 
+      }
+      else {
+        inttemp = int(temperature);      // Convert it to an integer ready for display on the 7 segment LED
+        displaytemp = String(inttemp);   // Move the ingerer value into a string to be displayed on the 7 segment LED
+        displayTemp(displaytemp);        // Call the routine to display the temprature on the 7 segment LED   
+        timeString = getthertcTime();    // Get the latest time from the rtc, write it to the time sring for display
+      }
     }
   }
 }
@@ -1006,3 +1015,89 @@ float getTemp (){
 }
 
 //End of code from the Temp Sync block
+
+//Start of code from the DHT11 sensor block
+
+float measure_DHT_values () {
+
+  //Serial.println("Checking the temp");
+  int chk = DHT.read11(DHT11_PIN);
+  //Serial.print("The temp is ");
+  //Serial.println(DHT.temperature);
+
+  //Serial.print("Temperature = ");
+  //Serial.println(DHT.temperature);
+  //Serial.print("Humidity = ");
+  //Serial.println(DHT.humidity);
+  temp_read = 'Y';
+
+  int offset = int(DHT.temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
+  //Serial.print("The offset value is set to ");
+  //Serial.println(offset);
+  //Serial.print("The lights should be on? - ");
+  //Serial.println(lights_on);
+
+  if (lights_on == 'Y') {
+    //Serial.println("The lights are on");
+    //Serial.print("The delay count is ");
+    //Serial.println(delayCount);
+    if (delayCount < 1) {
+      //Serial.println("Inside the delay block");
+      //Serial.print("Debug mode is set to ");
+      //Serial.println(debug);
+      if (debug==3){
+        Serial.print ("Inside the standard light setting routine.  delayCount = ");
+        Serial.println (delayCount);
+      }
+      setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
+      int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
+    
+      //Serial.print("Calculated the midpoint as ");
+      //Serial.println(midlights);
+
+      if (midlights > 0){                            //If not all the lights are red turn some pink
+        //Serial.print("Inside the midlights logic with an offset of ");
+        //Serial.println(offset);
+        if (offset > -1){
+          for (int l=offset+midlights; l>offset; l--){
+               //Serial.print("Looping the lights ");
+               //Serial.print(l);
+               //Serial.print(" of ");
+               //Serial.println(offset);
+               //delay(2000);
+               int val = 255/(midlights+2);            //Calculate a shade of pink to start with
+               int change = val*(l-offset);            //Adjust it by the light that is been lit (make to bluer nearer the blue light)
+               int r = (255 - change);                 //Calculate the red value (making it less red)
+               int b = (0 + change);                   //Calculate the blue value (making it more blue)
+   
+               setColours(strip.Color(r, 0, b), 0, l); //Set the value of the light based on the calculated value off r and b green is asways off
+
+          }
+        }  
+        else
+        {
+          setColours(strip.Color(0, 255, 0), 0, 8);
+          for (int o = 0; o < 9; o++){
+            setColours(strip.Color(0, 0, 0), 0, 8);
+            setColours(strip.Color(0, 255, 0), 0, o);
+            delay(5000);
+          }  
+        } 
+      }
+      if (offset > -1){
+        setColours(strip.Color(255, 0, 0), 0, offset); //Set the remaining lights to red      
+      }  
+    }
+  }
+  else 
+  {
+    //Serial.print("The lights are off");
+    setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
+  }
+
+  //Serial.print("About to return a temprature of ");
+  //Serial.println(DHT.temperature);
+  return (DHT.temperature);
+}
+
+// End of code from the DHT11 sensor block

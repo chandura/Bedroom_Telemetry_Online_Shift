@@ -115,7 +115,7 @@ float voltage = 0;           // Hold the value of the voltage calculated from th
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
 
 // Initialize DHT sensor.
-DHT dht(DHTPIN, DHTTYPE);
+//DHT dht(DHTPIN, DHTTYPE);
 
 void setup () {
   
