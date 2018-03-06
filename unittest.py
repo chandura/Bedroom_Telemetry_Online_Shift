@@ -1,4 +1,4 @@
-
+import unittest as unit_test
 
 from clock_classes import stream_config
 from clock_classes import ranges
@@ -13,7 +13,7 @@ theranges = ranges(0.00, '00:00')
 config = stream_config(configgroup)
 streamer = Streamer(bucket_name=config.bucketname, bucket_key=config.bucketkey, access_key=config.accesskey)
 
-class TestBetween(unittest.TestCase):
+class TestBetween(unit_test.TestCase):
 
     def test_config(self):
         config = stream_config(configgroup)
