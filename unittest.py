@@ -11,7 +11,7 @@ theranges = ranges(0.00, '00:00')
 config = stream_config(configgroup)
 streamer = Streamer(bucket_name=config.bucketname, bucket_key=config.bucketkey, access_key=config.accesskey)
 
-class TestUM
+class TestUM:
 
     def test_config(self):
         config = stream_config(configgroup)
@@ -22,7 +22,6 @@ class TestUM
 
     def test_record_write_1(self):
         write = write_record(1, 100, streamer)
-        assert write_record(1, 100, streamer) = 'N'
         self.assertEqual(write, 'N')
 
     def test_record_write_100(self):
