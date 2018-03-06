@@ -21,8 +21,7 @@ class TestUM:
         self.assertEqual(config.bucketname, 'Stream Test')
 
     def test_record_write_1(self):
-        write = write_record(1, 100, streamer)
-        self.assertEqual(write, 'Y')
+        assert write_record(1, 100, streamer) == 'N'
 
     def test_record_write_100(self):
         write = write_record(100, 100, streamer)
