@@ -22,7 +22,7 @@ class TestUM:
 
     def test_record_write_1(self):
         write = write_record(1, 100, streamer)
-        self.assertEqual(write, 'N')
+        self.assertEqual(write, 'Y')
 
     def test_record_write_100(self):
         write = write_record(100, 100, streamer)
