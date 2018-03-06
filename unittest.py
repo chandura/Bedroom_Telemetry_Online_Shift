@@ -107,6 +107,3 @@ class TestUM:
 
         self.assertEqual(theranges.temp_max, 25.00)
         self.assertEqual(theranges.post_max, 'N')
-
-if __name__ == '__main__':
-    unittest.main()
