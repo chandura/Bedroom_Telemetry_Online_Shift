@@ -132,9 +132,10 @@ void setup() {
     pinMode(digit3, OUTPUT); //Digit 3
     pinMode(digit4, OUTPUT); //Digit 4
     
-    pinMode(DHT11_POWER, OUTPUT);  // Set the relevant pin to power the DHT11.  So that it can be switched off
-    pinMode(temp, INPUT);          // Set the relevant pin to read the temprature
-    writeTemp();                   // Why do this, there is no temp set yet?
+    pinMode(DHT11_POWER, OUTPUT);     // Set the relevant pin to power the DHT11.  So that it can be switched off
+    digitalWrite(DHT11_POWER, HIGH);  // Switch on the temp sensor
+    pinMode(temp, INPUT);             // Set the relevant pin to read the temprature
+    writeTemp();                      // Why do this, there is no temp set yet?
 
 
     strip.begin();            // Initilise the communications to the LED strip
