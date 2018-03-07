@@ -91,8 +91,8 @@ float voltage = 0;           // Hold the value of the voltage calculated from th
 // Initilize thw Neo pixel strip
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
 
-// Initialize DHT sensor on PIN 5
-#define DHT11_PIN 9
+#define DHT11_PIN 9           // Initialize DHT sensor on PIN 9
+#define DHT11_POWER 5         // Define a pin to power 
 
 void setup() {
     // put your setup code here, to run once:
@@ -106,7 +106,6 @@ void setup() {
     Serial.println (GMT);                             // Confirm the setting of the GMT indicator
     Serial.print("Debugging mode is set to ");
     Serial.println(debug);
-
 
     if (! rtc.begin()) {                    // Need to make a change to set the LED to Help if the RTC can't be found
         Serial.println("Couldn't find RTC");  // Confirm that the rtc could not be found 
@@ -133,8 +132,9 @@ void setup() {
     pinMode(digit3, OUTPUT); //Digit 3
     pinMode(digit4, OUTPUT); //Digit 4
     
-    pinMode(temp, INPUT);    // Set the relevant pin to read the temprature
-    writeTemp();             // Why do this, there is no temp set yet?
+    pinMode(DHT11_POWER, OUTPUT);  // Set the relevant pin to power the DHT11.  So that it can be switched off
+    pinMode(temp, INPUT);          // Set the relevant pin to read the temprature
+    writeTemp();                   // Why do this, there is no temp set yet?
 
 
     strip.begin();            // Initilise the communications to the LED strip
