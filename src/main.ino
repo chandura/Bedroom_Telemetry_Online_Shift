@@ -1055,7 +1055,7 @@ float measure_DHT_values () {
       //Serial.print("Calculated the midpoint as ");
       //Serial.println(midlights);
 
-      if (midlights > 0){                            //If not all the lights are red turn some pink
+      if (midlights > -10){                            //If not all the lights are red turn some pink
         //Serial.print("Inside the midlights logic with an offset of ");
         //Serial.println(offset);
         if (offset > -1){
@@ -1076,6 +1076,7 @@ float measure_DHT_values () {
         }  
         else
         {
+          //The temp reading is 0.00 (or lower) as this is for inside we can assume that no readying has been taken
           setColours(strip.Color(0, 255, 0), 0, 8);
           for (int o = 0; o < 9; o++){
             setColours(strip.Color(0, 0, 0), 0, 8);
