@@ -1056,10 +1056,10 @@ float measure_DHT_values () {
       //Serial.print("Calculated the midpoint as ");
       //Serial.println(midlights);
 
-      if (midlights > -10){                            //If not all the lights are red turn some pink
+      if (midlights > 0){                            //If not all the lights are red turn some pink
         //Serial.print("Inside the midlights logic with an offset of ");
         //Serial.println(offset);
-        if (offset > -1){
+        if (offset > -17){
           for (int l=offset+midlights; l>offset; l--){
                //Serial.print("Looping the lights ");
                //Serial.print(l);
