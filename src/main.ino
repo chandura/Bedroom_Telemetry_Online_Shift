@@ -1021,27 +1021,27 @@ float getTemp (){
 
 float measure_DHT_values () {
 
-  //Serial.println("Checking the temp");
+  Serial.println("Checking the temp");
   int chk = DHT.read11(DHT11_PIN);
   //Serial.print("The temp is ");
   //Serial.println(DHT.temperature);
 
-  //Serial.print("Temperature = ");
-  //Serial.println(DHT.temperature);
+  Serial.print("Temperature = ");
+  Serial.println(DHT.temperature);
   //Serial.print("Humidity = ");
   //Serial.println(DHT.humidity);
   temp_read = 'Y';
 
   int offset = int(DHT.temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
-  //Serial.print("The offset value is set to ");
-  //Serial.println(offset);
+  Serial.print("The offset value is set to ");
+  Serial.println(offset);
   //Serial.print("The lights should be on? - ");
   //Serial.println(lights_on);
 
   if (lights_on == 'Y') {
-    //Serial.println("The lights are on");
-    //Serial.print("The delay count is ");
-    //Serial.println(delayCount);
+    Serial.println("The lights are on");
+    Serial.print("The delay count is ");
+    Serial.println(delayCount);
     if (delayCount < 1) {
       //Serial.println("Inside the delay block");
       //Serial.print("Debug mode is set to ");
@@ -1053,8 +1053,8 @@ float measure_DHT_values () {
       setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
       int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
     
-      //Serial.print("Calculated the midpoint as ");
-      //Serial.println(midlights);
+      Serial.print("Calculated the midpoint as ");
+      Serial.println(midlights);
 
       if (midlights > 0){                            //If not all the lights are red turn some pink
         //Serial.print("Inside the midlights logic with an offset of ");
