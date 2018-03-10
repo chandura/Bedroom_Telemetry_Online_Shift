@@ -22,7 +22,7 @@ if (os.name=='nt'):
 elif (os.name=='posix'):
     running_on = "live"
     configgroup = "initialstate.com"
-    loops = 100
+    loops = 50
 else:
     running_on = "unknown"
     configgroup = "unknown"
@@ -56,7 +56,7 @@ while True:
             print("Write next %s.  Input count %d" % (write_next, inputcount))
 
     sensor_output = str(ser.readline().strip())
-    #print("Sensor output %s" % sensor_output)
+    print("Sensor output %s" % sensor_output)
 
     if (write_next) == 'Y':
         #sensor_output = str(ser.readline().strip())

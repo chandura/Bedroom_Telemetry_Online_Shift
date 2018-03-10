@@ -814,6 +814,7 @@ void setColours(uint32_t c, uint8_t wait, int setNumber) {
 float getTemp (){  
   // Get the temprature
   
+  Serial.println("****REALLY!****");
   SensorAverage = 0;  // Using an average mechinisum for accuracy.  Start by settimg the value to 0.  
   int i;              // Create variable for the counting of the sensor values
 
@@ -1021,27 +1022,28 @@ float getTemp (){
 
 float measure_DHT_values () {
 
-  Serial.println("Checking the temp");
+  Serial.println("###########################################");
+  Serial.println("# Checking the temp");
   int chk = DHT.read11(DHT11_PIN);
   //Serial.print("The temp is ");
   //Serial.println(DHT.temperature);
 
-  Serial.print("Temperature = ");
-  Serial.println(DHT.temperature);
+  Serial.print("# Temp = ");
+  Serial.print(DHT.temperature);
   //Serial.print("Humidity = ");
   //Serial.println(DHT.humidity);
   temp_read = 'Y';
 
   int offset = int(DHT.temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
-  Serial.print("The offset value is set to ");
-  Serial.println(offset);
+  Serial.print(" - Offset = ");
+  Serial.print(offset);
   //Serial.print("The lights should be on? - ");
   //Serial.println(lights_on);
 
   if (lights_on == 'Y') {
-    Serial.println("The lights are on");
-    Serial.print("The delay count is ");
-    Serial.println(delayCount);
+    Serial.print(" - Lights on");
+    Serial.print(" - Delay count = ");
+    Serial.print(delayCount);
     if (delayCount < 1) {
       //Serial.println("Inside the delay block");
       //Serial.print("Debug mode is set to ");
@@ -1053,7 +1055,7 @@ float measure_DHT_values () {
       setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
       int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
     
-      Serial.print("Calculated the midpoint as ");
+      Serial.print(" - Midpoint = ");
       Serial.println(midlights);
 
       if (midlights > 0){                            //If not all the lights are red turn some pink
@@ -1099,6 +1101,7 @@ float measure_DHT_values () {
 
   //Serial.print("About to return a temprature of ");
   //Serial.println(DHT.temperature);
+  Serial.println("###########################################");
   return (DHT.temperature);
 }
 
