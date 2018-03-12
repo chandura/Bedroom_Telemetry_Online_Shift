@@ -1041,7 +1041,7 @@ float measure_DHT_values () {
   //Serial.println(lights_on);
 
   if (lights_on == 'Y') {
-    Serial.print(" - Lights on");
+    //Serial.print(" - Lights on");
     Serial.print(" - Delay count = ");
     Serial.print(delayCount);
     if (delayCount < 1) {
