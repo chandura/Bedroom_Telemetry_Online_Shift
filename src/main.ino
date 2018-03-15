@@ -176,7 +176,7 @@ void loop() {
     else {
       //temperature = getTemp();         // Get the current temprature from from the sensor
       if (temp_read == 'N'){             // Read the temprature once for this cycle
-        Serial.println("Go get the temp now");
+        //Serial.println("Go get the temp now");
         temperature = measure_DHT_values();
         writeTemp();                     // Write the temprature out to the serial monitor 
       }
@@ -1022,32 +1022,14 @@ float getTemp (){
 
 float measure_DHT_values () {
 
-  Serial.println("###########################################");
-  Serial.println("# Checking the temp");
   int chk = DHT.read11(DHT11_PIN);
-  //Serial.print("The temp is ");
-  //Serial.println(DHT.temperature);
 
-  Serial.print("# Temp = ");
-  Serial.print(DHT.temperature);
-  //Serial.print("Humidity = ");
-  //Serial.println(DHT.humidity);
   temp_read = 'Y';
 
   int offset = int(DHT.temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
-  Serial.print(" - Offset = ");
-  Serial.print(offset);
-  //Serial.print("The lights should be on? - ");
-  //Serial.println(lights_on);
 
   if (lights_on == 'Y') {
-    Serial.print(" - Lights on");
-    Serial.print(" - Delay count = ");
-    Serial.print(delayCount);
     if (delayCount < 1) {
-      //Serial.println("Inside the delay block");
-      //Serial.print("Debug mode is set to ");
-      //Serial.println(debug);
       if (debug==3){
         Serial.print ("Inside the standard light setting routine.  delayCount = ");
         Serial.println (delayCount);
@@ -1055,24 +1037,16 @@ float measure_DHT_values () {
       setColours(strip.Color(0, 0, 255), 0, 8);      //Set all the lights to blue
       int midlights = 7 - offset;                    //Calculate first of the middle (pink) lights.  7 in the strip - the lights to turn red
     
-      Serial.print(" - Midpoint = ");
-      Serial.println(midlights);
-
       if (midlights > 0){                            //If not all the lights are red turn some pink
-        //Serial.print("Inside the midlights logic with an offset of ");
-        //Serial.println(offset);
-        if (offset > -17){
+        if (offset > -1){
           for (int l=offset+midlights; l>offset; l--){
-               //Serial.print("Looping the lights ");
-               //Serial.print(l);
-               //Serial.print(" of ");
-               //Serial.println(offset);
+               
                //delay(2000);
                int val = 255/(midlights+2);            //Calculate a shade of pink to start with
                int change = val*(l-offset);            //Adjust it by the light that is been lit (make to bluer nearer the blue light)
                int r = (255 - change);                 //Calculate the red value (making it less red)
                int b = (0 + change);                   //Calculate the blue value (making it more blue)
-   
+               
                setColours(strip.Color(r, 0, b), 0, l); //Set the value of the light based on the calculated value off r and b green is asways off
 
           }
@@ -1080,12 +1054,14 @@ float measure_DHT_values () {
         else
         {
           //The temp reading is 0.00 (or lower) as this is for inside we can assume that no readying has been taken
-          setColours(strip.Color(0, 255, 0), 0, 8);
-          for (int o = 0; o < 9; o++){
-            setColours(strip.Color(0, 0, 0), 0, 8);
-            setColours(strip.Color(0, 255, 0), 0, o);
-            delay(5000);
-          }  
+          if (offset = -17){
+            setColours(strip.Color(0, 255, 0), 0, 8);
+            for (int o = 0; o < 9; o++){
+              setColours(strip.Color(0, 0, 0), 0, 8);
+              setColours(strip.Color(0, 255, 0), 0, o);
+              delay(5000);
+            }  
+          }
         } 
       }
       if (offset > -1){
@@ -1099,9 +1075,6 @@ float measure_DHT_values () {
     setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
   }
 
-  //Serial.print("About to return a temprature of ");
-  //Serial.println(DHT.temperature);
-  Serial.println("###########################################");
   return (DHT.temperature);
 }
 

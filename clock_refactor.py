@@ -22,7 +22,7 @@ if (os.name=='nt'):
 elif (os.name=='posix'):
     running_on = "live"
     configgroup = "initialstate.com"
-    loops = 50
+    loops = 25
 else:
     running_on = "unknown"
     configgroup = "unknown"
@@ -56,28 +56,29 @@ while True:
             print("Write next %s.  Input count %d" % (write_next, inputcount))
 
     sensor_output = str(ser.readline().strip())
-    print("Sensor output %s" % sensor_output)
+    #print("Sensor output %s" % sensor_output)
 
     if (write_next) == 'Y':
         #sensor_output = str(ser.readline().strip())
-        print("Sensor Output %s " % sensor_output)
+        #print("Sensor Output %s " % sensor_output)
         if running_on == 'test':
             sensor_output = sensor_output.strip('b\'')
         else:
             sensor_output = sensor_output.strip('b\'')
-        print("Checking %s" % sensor_output[0])
+        #print("Checking %s" % sensor_output[0])
         data = sensor_output[0]
-        print("Data tested, found %s write_next is %s " % (data, write_next))
+        #print("Data tested, found %s write_next is %s " % (data, write_next))
         value_to_post, data = post_record(data, write_next, sensor_output)
-        print("Value to post %s and data is %s " % (value_to_post, data))
+        #print("Value to post %s and data is %s " % (value_to_post, data))
 
         if (value_to_post) == 'Y':
             inputcount = 0
             write_next = 'N'
             post_count = post_count + 1
             for key, value in data.items():
-                print("Key %s and value %s (post count %s)" % (key, value, post_count))
+                #print("Key %s and value %s (post count %s)" % (key, value, post_count))
                 max_min = post_value(key, value, streamer, post_count, theranges)
 
     inputcount = inputcount + 1
+    #print("Input count %s" % inputcount)
     streamer.close()
