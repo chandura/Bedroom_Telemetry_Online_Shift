@@ -1029,12 +1029,6 @@ float measure_DHT_values () {
   int offset = int(DHT.temperature-17);     //Adjust the temprature ready for dislay on the neo-pixels (it starts at 17 dgrees)
 
   if (lights_on == 'Y') {
-<<<<<<< HEAD
-=======
-    //Serial.print(" - Lights on");
-    Serial.print(" - Delay count = ");
-    Serial.print(delayCount);
->>>>>>> 67ce2e7ca4a4b68eacb900999307a9c03622c16d
     if (delayCount < 1) {
       if (debug==3){
         Serial.print ("Inside the standard light setting routine.  delayCount = ");
