@@ -1054,7 +1054,7 @@ float measure_DHT_values () {
         else
         {
           //The temp reading is 0.00 (or lower) as this is for inside we can assume that no readying has been taken
-          if (offset = -17){
+          if (offset == -17){
             setColours(strip.Color(0, 255, 0), 0, 8);
             for (int o = 0; o < 9; o++){
               setColours(strip.Color(0, 0, 0), 0, 8);
