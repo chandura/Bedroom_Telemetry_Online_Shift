@@ -1,0 +1,13 @@
+open 192.168.0.87
+pi
+raspberry
+lcd H:\Bedroom_Telemetry_Online_Shift\src
+cd arduino/bedroom_clock/src
+binary
+mput *.ino
+cd ../../../python/clockstream
+lcd ..
+mput *.py
+mput *.ini
+disconnect
+quit
