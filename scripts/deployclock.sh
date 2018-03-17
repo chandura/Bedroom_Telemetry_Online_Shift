@@ -6,7 +6,7 @@ victim="$(pgrep -f clock_refactor.py)"
 echo Killing process $victim
 kill -9 $victim
 sleep 5
-cd Bedroom_Telemetry_Online_Shift
+cd ..
 pwd
 echo Updateing code from GitHub
 git pull
