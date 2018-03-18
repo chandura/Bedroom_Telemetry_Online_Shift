@@ -38,7 +38,7 @@ print("The bucket key is %s" % config.bucketkey)
 print("The bucket to use is %s" % config.bucketname)
 print("The delay loop is set to %s" % loops)
 
-streamer.log("My Messages", "Waiting for temp")
+streamer.log("My Messages", "Clockstream telemetry started ...")
 
 if running_on == 'test':
     port = "COM5"

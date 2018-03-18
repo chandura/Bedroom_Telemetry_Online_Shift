@@ -18,8 +18,6 @@ class TestBetween(unittest.TestCase):
     def test_config(self):
         config = stream_config(configgroup)
 
-        self.assertEqual(config.accesskey, 'jvrPfFpIg0LhMzBLkuuNkyhc4nbXGfSM')
-        self.assertEqual(config.bucketkey, 'CCAQUFDTHUUW')
         self.assertEqual(config.bucketname, 'Stream Test')
 
     def test_record_write_1(self):
