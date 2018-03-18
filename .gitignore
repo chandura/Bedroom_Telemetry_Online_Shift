@@ -4,3 +4,5 @@
 .vscode/launch.json
 .vscode/*.db
 .vscode/.browse.c_cpp.db*
+clockstream.ini
+tempstream.ini
