@@ -756,14 +756,18 @@ void night_and_day ()
   
   int timeset = hours * 100;
   timeset = timeset + minutes;
-  if (timeset < nightoff && timeset > morningon) {                 
-    lights_on = 'Y';                                  // Ensure that the on/off swicth is set to on if the time is between the morningon time and the nightoff time
+  if (timeset < nightoff && timeset > morningon) {  
+    if (lights_on=='N'){                      // The lights are being switched off
+      digitalWrite(DHT11_POWER, HIGH);        // Make sure there is power to the temp sensor
+    }               
+    lights_on = 'Y';                          // Ensure that the on/off swicth is set to on if the time is between the morningon time and the nightoff time
     Brightness = 500;                         // Set the 7 Seg LED brightness to day time brightness
   }
   else 
   {
     if (lights_on=='Y'){                              // The light switch is being set to 'N'
-      setColours(strip.Color(0, 0, 0), 0, 8);         // Set all the lights to off                               
+      setColours(strip.Color(0, 0, 0), 0, 8);         // Set all the lights to off  
+      digitalWrite(DHT11_POWER, LOW);           // Make sure there is power to the temp sensor                             
     }
     lights_on = 'N';                                  // Ensure that the on/off swicth is set to off if the time is between the nightoff time and the morningon time
     Brightness = 200;                         // Set the 7 Seg LED brightness to night time brightness
