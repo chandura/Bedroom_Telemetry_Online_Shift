@@ -82,6 +82,7 @@ int Count;                   // Declare the counter to read the temp sensor many
 #define Count 1000           // The sensor will sample the temp 1000 times for accuracy
 float delayCount = 0;        // Set up a counter to delay the reset of the Arduino if it is over temprature
 float temperature;           // Holds the calculated tempreture
+float humidity;              // Holds the value for the room humidity
 int inttemp;                 // Use to convert the calculated temprature into an integer for display
 String displaytemp;          // Convert the integer version of the temprature to a string to be dislayed on the 7 segment LED
 long SensorAverage = 0;      // Hold an average sensor value over a number of cycles to improve accuracy
@@ -177,8 +178,11 @@ void loop() {
       //temperature = getTemp();         // Get the current temprature from from the sensor
       if (temp_read == 'N'){             // Read the temprature once for this cycle
         //Serial.println("Go get the temp now");
-        temperature = measure_DHT_values();
+        measure_DHT_values();
+        temperature = DHT.temperature;
+        humidity = DHT.humidity;
         writeTemp();                     // Write the temprature out to the serial monitor 
+        writeHumid();                    // Write the humidity out to the srial monitor
       }
       else {
         inttemp = int(temperature);      // Convert it to an integer ready for display on the 7 segment LED
@@ -800,6 +804,21 @@ void writeTemp (){
 
 //End of code from the Write Temp block
 
+void writeHumid (){
+  
+  //Write the calculated temp out to the serial port for transmission in JSON format
+  Serial.print("{\"Sensor_ID\":7,\"Sensor_Value\":");
+  Serial.print(sensorVal);
+  Serial.print(",\"Voltage\":\"");
+  
+  Serial.print(voltage);
+  Serial.print("\",\"Humidity\":\"");
+ 
+  Serial.print(humidity);
+  
+  Serial.println("\"}");
+}
+
 //Start of code from the NeoPixel block
 
 // Fill the dots one after the other with a colour
@@ -1024,7 +1043,7 @@ float getTemp (){
 
 //Start of code from the DHT11 sensor block
 
-float measure_DHT_values () {
+void measure_DHT_values () {
 
   int chk = DHT.read11(DHT11_PIN);
 
@@ -1079,7 +1098,8 @@ float measure_DHT_values () {
     setColours(strip.Color(0, 0, 0), 0, 8);   //Set all the lights to off
   }
 
-  return (DHT.temperature);
+  //return (DHT.temperature);
+  //return (DHT);
 }
 
 // End of code from the DHT11 sensor block
