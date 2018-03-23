@@ -29,7 +29,7 @@ else:
     sys.exit()
 
 config = stream_config(configgroup)
-theranges = ranges(0.00, '00:00')
+theranges = ranges(0.00, '00:00', 0.00)
 streamer = Streamer(bucket_name=config.bucketname, bucket_key=config.bucketkey, access_key=config.accesskey)
 
 print("Started at %s" % datetime.now().strftime('%d-%m-%Y %H:%M'))
