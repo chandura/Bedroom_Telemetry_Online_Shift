@@ -53,5 +53,5 @@ def post_value(key, value, streamer, post_count, theranges):
             theranges.post_max = "N"
 
     if key == "Humidity":
-        theranges.humid.now = value
+        theranges.humid_now = value
         streamer.log("Humidity_Now", value)
