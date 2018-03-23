@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95eff566-7309-4531-9540-798ac1488abc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/clock_classes.py" afterPath="$PROJECT_DIR$/clock_classes.py" />
-      <change beforePath="$PROJECT_DIR$/clock_functions.py" afterPath="$PROJECT_DIR$/clock_functions.py" />
-      <change beforePath="$PROJECT_DIR$/clock_refactor.py" afterPath="$PROJECT_DIR$/clock_refactor.py" />
+      <change beforePath="$PROJECT_DIR$/clock_test.py" afterPath="$PROJECT_DIR$/clock_test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="clock_functions.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="clock_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/clock_functions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
@@ -72,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="clock_test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="clock_test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clock_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-968">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="11" column="38" lean-forward="false" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -129,14 +126,14 @@
         <option value="$PROJECT_DIR$/new_clock_stream.py" />
         <option value="$PROJECT_DIR$/serial_emulator.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/clock_test.py" />
         <option value="$PROJECT_DIR$/clock_classes.py" />
         <option value="$PROJECT_DIR$/clock_refactor.py" />
         <option value="$PROJECT_DIR$/clock_functions.py" />
+        <option value="$PROJECT_DIR$/clock_test.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-1" />
     <option name="width" value="893" />
     <option name="height" value="688" />
@@ -331,7 +328,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19106881" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -690,16 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clock_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-968">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_clock_stream.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
@@ -742,6 +729,16 @@
           <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clock_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="11" column="38" lean-forward="false" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -9,7 +9,7 @@ from ISStreamer.Streamer import Streamer
 
 configgroup = 'initialstate.test.com'
 
-theranges = ranges(0.00, '00:00')
+theranges = ranges(0.00, '00:00', 0.00)
 config = stream_config(configgroup)
 streamer = Streamer(bucket_name=config.bucketname, bucket_key=config.bucketkey, access_key=config.accesskey)
 
