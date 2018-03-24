@@ -14,6 +14,7 @@ inputcount = 1
 write_next = 'N'
 post_count = 0
 min_temp = 0.00
+reading_count = 0
 
 if (os.name=='nt'):
     running_on = "test"
@@ -73,11 +74,14 @@ while True:
 
         if (value_to_post) == 'Y':
             inputcount = 0
-            write_next = 'N'
             post_count = post_count + 1
             for key, value in data.items():
                 #print("Key %s and value %s (post count %s)" % (key, value, post_count))
-                max_min = post_value(key, value, streamer, post_count, theranges)
+                reading_count = post_value(key, value, streamer, post_count, theranges, reading_count)
+                #print("Reading count is now %s" % reading_count)
+                if (reading_count) == 2:
+                    write_next = 'N'
+                    reading_count = 0
 
     inputcount = inputcount + 1
     #print("Input count %s" % inputcount)

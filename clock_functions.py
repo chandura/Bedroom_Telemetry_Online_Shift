@@ -31,16 +31,19 @@ def post_record(data, write_next, sensor_output):
         value_to_post = 'N'
         return (value_to_post, 'not applicable')
 
-def post_value(key, value, streamer, post_count, theranges):
+def post_value(key, value, streamer, post_count, theranges, reading_count):
 
     theranges.comp_date= datetime.now().strftime('%d')
     print("Ref date %s" % theranges.ref_date)
     print("The days is %s" % theranges.comp_date)
     theranges.reset
 
-    streamer.log("Input Count", post_count)
+    if reading_count == 0:
+        streamer.log("Input Count", post_count)
+        reading_count = 1
 
     if key == "Temperature":
+        reading_count = 1
         theranges.temp_now = value
         theranges.set_min
         theranges.set_max
@@ -53,5 +56,8 @@ def post_value(key, value, streamer, post_count, theranges):
             theranges.post_max = "N"
 
     if key == "Humidity":
+        reading_count = 2
         theranges.humid_now = value
         streamer.log("Humidity_Now", value)
+
+    return (reading_count)
