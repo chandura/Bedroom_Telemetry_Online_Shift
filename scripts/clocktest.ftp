@@ -8,6 +8,6 @@ mput *.ino
 cd ../../../python/clockstream
 lcd ..
 mput *.py
-mput *.ini
+mput platformio.ini
 disconnect
 quit

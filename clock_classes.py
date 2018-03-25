@@ -28,7 +28,7 @@ class stream_config:
 
 class ranges:
 
-    def __init__(self, temp_now, time_now):
+    def __init__(self, temp_now, time_now, humid_now):
         self.temp_now = temp_now
         self.time_now = time_now
         self.ref_date = 0
@@ -37,6 +37,7 @@ class ranges:
         self.post_min = 'N'
         self.temp_max = 0.00
         self.post_max = 'N'
+        self.humid_now = humid_now
 
     @property
     def reset(self):
