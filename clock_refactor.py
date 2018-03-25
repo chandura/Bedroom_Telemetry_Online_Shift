@@ -12,7 +12,7 @@ from ISStreamer.Streamer import Streamer
 
 inputcount = 1
 write_next = 'N'
-post_count = 0
+post_count = 1
 min_temp = 0.00
 reading_count = 0
 
@@ -57,7 +57,7 @@ while True:
             print("Write next %s.  Input count %d" % (write_next, inputcount))
 
     sensor_output = str(ser.readline().strip())
-    #print("Sensor output %s" % sensor_output)
+    print("Sensor output %s" % sensor_output)
 
     if (write_next) == 'Y':
         #sensor_output = str(ser.readline().strip())
@@ -74,15 +74,20 @@ while True:
 
         if (value_to_post) == 'Y':
             inputcount = 0
-            post_count = post_count + 1
+            #post_count = post_count + 1
+            reading_count = reading_count + 1
             for key, value in data.items():
                 #print("Key %s and value %s (post count %s)" % (key, value, post_count))
-                reading_count = post_value(key, value, streamer, post_count, theranges, reading_count)
-                #print("Reading count is now %s" % reading_count)
-                if (reading_count) == 2:
-                    write_next = 'N'
-                    reading_count = 0
+                post_value(key, value, streamer, post_count, theranges)
+                print("Reading count is now %s" % reading_count)
+
+            if (reading_count) == 2:
+                print("Reading count is resetting")
+                streamer.log("Input Count", post_count)
+                write_next = 'N'
+                reading_count = 0
+                post_count = post_count + 1
 
     inputcount = inputcount + 1
-    #print("Input count %s" % inputcount)
+    print("Input count %s" % inputcount)
     streamer.close()

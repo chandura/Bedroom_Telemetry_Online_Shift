@@ -6,14 +6,14 @@ def write_record (inputcount, loops, streamer):
     write_next = 'N'
     if (inputcount % loops) == 0:
         #print("Write to Dashboard %s" % (inputcount/100000))
-        print("Input count %d" % (inputcount/loops))
+        #print("Input count %d" % (inputcount/loops))
         #streamer.log("Input Count", (inputcount/100000))
         write_next = 'Y'
 
     #Discard the first reading from the serial input is it seems to be badly formed
     # #print("Test for the first reading")
-    if (inputcount) == 1:
-        write_next = 'N'
+    #if (inputcount) == 1:
+        #write_next = 'N'
 
     return write_next
 
@@ -31,19 +31,21 @@ def post_record(data, write_next, sensor_output):
         value_to_post = 'N'
         return (value_to_post, 'not applicable')
 
-def post_value(key, value, streamer, post_count, theranges, reading_count):
+def post_value(key, value, streamer, post_count, theranges):
 
     theranges.comp_date= datetime.now().strftime('%d')
-    print("Ref date %s" % theranges.ref_date)
-    print("The days is %s" % theranges.comp_date)
+    #print("Ref date %s" % theranges.ref_date)
+    #print("The days is %s" % theranges.comp_date)
     theranges.reset
 
-    if reading_count == 0:
-        streamer.log("Input Count", post_count)
-        reading_count = 1
+    #print("Reading count %s " % reading_count)
+    print("Key %s " % key)
+    #if reading_count == 0:
+        #streamer.log("Input Count", post_count)
+        #reading_count = 1
 
     if key == "Temperature":
-        reading_count = 1
+        #reading_count = 1
         theranges.temp_now = value
         theranges.set_min
         theranges.set_max
@@ -56,8 +58,8 @@ def post_value(key, value, streamer, post_count, theranges, reading_count):
             theranges.post_max = "N"
 
     if key == "Humidity":
-        reading_count = 2
+        #reading_count = 2
         theranges.humid_now = value
         streamer.log("Humidity_Now", value)
 
-    return (reading_count)
+    #return (reading_count)
