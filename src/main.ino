@@ -65,6 +65,7 @@ RTC_DS3231 rtc;
 int latchPin = 8;            // Pin connected to ST_CP of 74HC595
 int clockPin = 7;            // Pin connected to SH_CP of 74HC595
 int dataPin = 6;             // Pin connected to DS of 74HC595
+int SRCLR = 4;               // Pin connected to Retain inf0 Pin of 74HC595
 
 //Set up the initial variables associated with the tempreture functions
 float input_voltage = 4.45;  // Set the value used to calculate the voltage for the temprature reading
@@ -138,6 +139,7 @@ void setup() {
     pinMode(temp, INPUT);             // Set the relevant pin to read the temprature
     writeTemp();                      // Why do this, there is no temp set yet?
 
+    digitalWrite(SRCLR, HIGH);        // Set the retain info pin tp high to emulate 5v
 
     strip.begin();            // Initilise the communications to the LED strip
     strip.setBrightness(6);   // Set the brightness at which to display the LEDs
