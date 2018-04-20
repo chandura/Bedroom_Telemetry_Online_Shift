@@ -1047,7 +1047,7 @@ float getTemp (){
 
 void measure_DHT_values () {
 
-  int chk = DHT.read11(DHT11_PIN);
+  float chk = DHT.read22(DHT11_PIN);
 
   temp_read = 'Y';
 
