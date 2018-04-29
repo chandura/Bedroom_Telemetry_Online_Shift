@@ -21,7 +21,7 @@ dht DHT;
 
 // Switches to switch on various special modes
 boolean verbose = 0;  //Switch this on (1) if you want to debugging prompts to be output
-boolean setTheTime = false;  //Switch this on (1) if you want to reset the time on the RTC at restart.
+boolean setTheTime = true;  //Switch this on (1) if you want to reset the time on the RTC at restart.
 int debug = 0;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
