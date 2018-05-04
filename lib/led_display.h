@@ -15,5 +15,5 @@ class LEDDisplay
     void nine();
     void zero();
   private:
-    int _pin;
+    int _latchPin;
 };
