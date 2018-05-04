@@ -4,8 +4,16 @@ class LEDDisplay
 {
   public:
     Morse(int pin);
-    void dot();
-    void dash();
+    void one();
+    void two();
+    void three();
+    void four();
+    void five();
+    void six();
+    void seven();
+    void eight();
+    void nine();
+    void zero();
   private:
     int _pin;
 };
