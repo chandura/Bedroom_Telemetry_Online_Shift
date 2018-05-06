@@ -22,11 +22,12 @@ dht DHT;
 // Switches to switch on various special modes
 boolean verbose = 1;  //Switch this on (1) if you want to debugging prompts to be output
 boolean setTheTime = false;  //Switch this on (1) if you want to reset the time on the RTC at restart.
-int debug = 0;        //A value of 0 swithces off all debugging
+int debug = 2;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
                       //A value of 3 switches on the Temp overrun debugging
                       //A value of 4 switches on the day and night debugging 
+                      //A value of 5 switches on the digit display debugging
 
 int Brightness = 500;
 //#define DISPLAY_BRIGHTNESS  500  // Define the brightness of the 7 Seg LEDs. The higher the number the brighter the lights 2000 - 0
@@ -454,7 +455,7 @@ void nine()
 
 void zero()
 {
-  if (verbose==1){
+  if (debug==5){
     Serial.println("This is a zero");
   }
   digitalWrite(latchPin, LOW);
