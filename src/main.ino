@@ -734,6 +734,11 @@ void clockchange () {
   
   debug_summertime();
    
+  if (themonth > 3 && themonth < 10)
+  {
+    GMT = 'Y';
+  }
+  
   if (themonth == 10) {
     if (theday == 0) {
       if (monthday + 7 > 31) {
