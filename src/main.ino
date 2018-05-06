@@ -20,9 +20,9 @@ dht DHT;
 #define PIN 12
 
 // Switches to switch on various special modes
-boolean verbose = 1;  //Switch this on (1) if you want to debugging prompts to be output
+boolean verbose = 0;  //Switch this on (1) if you want to debugging prompts to be output
 boolean setTheTime = false;  //Switch this on (1) if you want to reset the time on the RTC at restart.
-int debug = 2;        //A value of 0 swithces off all debugging
+int debug = 0;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
                       //A value of 3 switches on the Temp overrun debugging
@@ -700,7 +700,8 @@ void summertime () {
     Serial.print("The month = ");
     Serial.println(themonth);
   }
-  if (themonth > 3 && themonth < 11){
+  if (themonth > 3 && themonth < 11)
+  {
     GMT = 'N';
   }
   else if (themonth == 10){
@@ -734,11 +735,6 @@ void clockchange () {
   
   debug_summertime();
    
-  if (themonth > 3 && themonth < 10)
-  {
-    GMT = 'Y';
-  }
-  
   if (themonth == 10) {
     if (theday == 0) {
       if (monthday + 7 > 31) {
