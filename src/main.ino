@@ -614,10 +614,10 @@ void setrtcTime () {
     
   rtc.adjust(DateTime(__DATE__, __TIME__));            // This sets the RTC to the date & time this sketch was compiled
   summertime();
-  if GMT == 'N'{
+  if (GMT=='N'){  
       DateTime now = rtc.now();
       int hour = now.hour();
-      String newtime = String(hour) + ":" + String(int(now.minutes)) + ":" + String(int(now.seconds));
+      String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
   }
   setTheTime=false;                                           // Now switch off the reset so it isn't set again
