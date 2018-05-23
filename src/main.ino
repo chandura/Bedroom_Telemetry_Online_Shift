@@ -22,7 +22,7 @@ dht DHT;
 // Switches to switch on various special modes
 boolean verbose = 1;  //Switch this on (1) if you want to debugging prompts to be output
 boolean setTheTime = false;  //Switch this on (1) if you want to reset the time on the RTC at restart.
-int debug = 2;        //A value of 0 swithces off all debugging
+int debug = 0;        //A value of 0 swithces off all debugging
                       //A value of 1 swicthes on the debugging of the help message
                       //A value of 2 switches on the Summer Time debugging
                       //A value of 3 switches on the Temp overrun debugging
@@ -614,6 +614,8 @@ void setrtcTime () {
     
   rtc.adjust(DateTime(__DATE__, __TIME__));            // This sets the RTC to the date & time this sketch was compiled
   summertime();
+  Serial.print("The GMT value is ");
+  Serial.println(GMT);
   if (GMT=='N'){  
       DateTime now = rtc.now();
       int hour = now.hour();
