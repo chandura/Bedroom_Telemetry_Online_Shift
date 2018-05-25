@@ -613,6 +613,7 @@ void setrtcTime () {
   // End of the time confirmation block
     
   rtc.adjust(DateTime(__DATE__, __TIME__));            // This sets the RTC to the date & time this sketch was compiled
+  getthertcTime(); 
   summertime();
   Serial.print("The GMT value is ");
   Serial.println(GMT);
@@ -621,6 +622,7 @@ void setrtcTime () {
       int hour = now.hour();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
+      Serial.println("Waiting ...");
       delay(30000);
   }
   setTheTime=false;                                           // Now switch off the reset so it isn't set again
