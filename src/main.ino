@@ -6,7 +6,7 @@
 #include <dht.h>
 dht DHT;
 
-// Date and time functions using a DS3231 RTC connected via I2C and Wire lib
+// Date and time functions using a DS3231 RTC connected viax   I2C and Wire lib
 #include <Wire.h>
 #include <RTClib.h>
 #include <Time.h>
@@ -621,6 +621,13 @@ void setrtcTime () {
       DateTime now = rtc.now();
       int hour = now.hour();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+      Serial.println(newtime);
+      hour = hour + 1;
+      newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+      Serial.println("New time ...");
+      rtc.adjust(DateTime(2018, 5, 23, hours, 0, 0));
+      now = rtc.now();
+      newtime = String(int(now.hour())) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
       Serial.println("Waiting ...");
       delay(30000);
