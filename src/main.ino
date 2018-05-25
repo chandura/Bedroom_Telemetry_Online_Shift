@@ -621,11 +621,17 @@ void setrtcTime () {
       DateTime now = rtc.now();
       int hour = now.hour();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+      Serial.print("Starting time ");
       Serial.println(newtime);
-      hour = hour + 1;
+      if (hour==12){
+        hour = 01;
+      }
+      else{
+        hour = hour + 1;
+      }
       newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println("New time ...");
-      rtc.adjust(DateTime(2018, 5, 23, hours, 0, 0));
+      rtc.adjust(DateTime(2018, 5, 23, hours, 00, 00));
       now = rtc.now();
       newtime = String(int(now.hour())) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
