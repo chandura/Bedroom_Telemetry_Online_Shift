@@ -620,7 +620,7 @@ void setrtcTime () {
   if (GMT=='N'){  
       DateTime now = rtc.now();
       int hour = now.hour();
-      int min = now.min();
+      int min = now.minute();
       int second = now.second();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.print("Starting time ");
