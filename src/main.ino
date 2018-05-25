@@ -631,7 +631,7 @@ void setrtcTime () {
 
 String getthertcTime () {
   if (verbose==1){
-      Serial.print("Getting the time now");
+      Serial.println("Getting the time now");
   }
     
   DateTime now = rtc.now();
