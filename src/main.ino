@@ -619,9 +619,12 @@ void setrtcTime () {
   Serial.println(GMT);
   if (GMT=='N'){  
       DateTime now = rtc.now();
+      int year = now.year();
+      int month = now.month();
+      int day = now.day();
       int hour = now.hour();
-      //int min = now.minute();
-      //int second = now.second();
+      int min = now.minute();
+      int second = now.second();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.print("Starting time ");
       Serial.println(newtime);
@@ -635,9 +638,9 @@ void setrtcTime () {
       Serial.println (hour);
       newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.print("New time ...");
-      rtc.adjust(DateTime(2018, 5, 23, hour, 00, 00));
+      rtc.adjust(DateTime(year, month, day, hour, min, second));
       now = rtc.now();
-      newtime = String(int(now.hour())) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+      newtime = String(int(now.day()))+':'+String(int(now.month()))+':'+String(int(now.year()))+' '+String(int(now.hour())) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
       Serial.println("Waiting ...");
       delay(30000);
