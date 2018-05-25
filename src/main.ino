@@ -621,6 +621,7 @@ void setrtcTime () {
       int hour = now.hour();
       String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
       Serial.println(newtime);
+      delay(30000);
   }
   setTheTime=false;                                           // Now switch off the reset so it isn't set again
 }
