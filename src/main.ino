@@ -601,6 +601,8 @@ void lightNumber(int numberToDisplay) {
 
 void setrtcTime () {
   
+  String newtime;
+
   // A request has been made to reset the time on the rtc. Set it to the time that the sketch was compiled
   Serial.println("Setting the clock in 30 seconds");   // Confirm to the outside world that the time is being reset
   delay(30000);                                        // Delay for 30 seconds to ensure that the monitor has been started and the world is watching
@@ -612,40 +614,54 @@ void setrtcTime () {
   Serial.println(__TIME__);
   // End of the time confirmation block
     
-  rtc.adjust(DateTime(__DATE__, __TIME__));            // This sets the RTC to the date & time this sketch was compiled
-  getthertcTime(); 
-  summertime();
-  Serial.print("The GMT value is ");
-  Serial.println(GMT);
-  if (GMT=='N'){  
-      DateTime now = rtc.now();
-      int year = now.year();
-      int month = now.month();
+  rtc.adjust(DateTime(__DATE__, __TIME__));    // This sets the RTC to the date & time this sketch was compiled
+  //The program assumed that ths time was set whilst we were in GMT
+  //Now we need to check snd see if it was actually BST and adjust accordinglly
+  getthertcTime();                              //Get the time that the clock has been set to
+  summertime();                                 //Go find out of it was during the BST part of the year
+  if (debug == 3){                              //Show the findings if in debug mode
+      Serial.print("The GMT value is ");
+      Serial.println(GMT);
+  }
+
+  if (GMT=='N'){                                //If GMT is N the clock was set in the summer - BST
+      DateTime now = rtc.now();                 //Get the time that it is set too so it can be changed
+      int year = now.year();                    
+      int month = now.month();                  
       int day = now.day();
       int hour = now.hour();
       int min = now.minute();
       int second = now.second();
-      String newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
-      Serial.print("Starting time ");
-      Serial.println(newtime);
-      if (hour==12){
-        hour = 01;
+
+      if (debug == 3){                          //If debugging is on show the time that we stared with
+          newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+          Serial.print("Starting time ");
+          Serial.println(newtime);
+      }
+
+      if (hour==23){                            //Check if we are in the eleven pm'th hour
+        hour = 00;                              //We are so it is midight something
       }
       else{
-        hour = hour + 1;
+        hour = hour + 1;                        //We are not so just add an hour
       }
-      Serial.print("Hour set to ");
-      Serial.println (hour);
-      newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
-      Serial.print("New time ...");
-      rtc.adjust(DateTime(year, month, day, hour, min, second));
-      now = rtc.now();
+
+      if (debug == 3){                          //In debug mode show the new hour and time
+          Serial.print("Hour set to ");
+          Serial.println (hour);
+          newtime = String(hour) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+          Serial.print("New time ...");
+      }
+
+      rtc.adjust(DateTime(year, month, day, hour, min, second)); //Set the RTC to the adjusred time
+      
+      now = rtc.now();                                           //Show the adjusted time
       newtime = String(int(now.day()))+':'+String(int(now.month()))+':'+String(int(now.year()))+' '+String(int(now.hour())) + ":" + String(int(now.minute())) + ":" + String(int(now.second()));
+      Serial.print("Time set during BST.  Adjusted to ");
       Serial.println(newtime);
-      Serial.println("Waiting ...");
-      delay(30000);
+      delay(10000);
   }
-  setTheTime=false;                                           // Now switch off the reset so it isn't set again
+  setTheTime=false;                             // Now switch off the reset so it isn't set again
 }
 
 //End of the code from the RTC Control block
