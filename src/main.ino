@@ -669,7 +669,7 @@ void setrtcTime () {
 //Start of code from the Get RTC Time block
 
 String getthertcTime () {
-  if (verbose==1){
+  if (debug==3){
       Serial.println("Getting the time now");
   }
     
